@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfh2oaamlewrs"]
+
+[ext_resource type="Texture2D" uid="uid://dw1slo0ggacaq" path="res://Assets/PlayerAnimations/idle1_1-Sheet.png" id="1_h5ns3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f281c"]
+atlas = ExtResource("1_h5ns3")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0avf"]
+atlas = ExtResource("1_h5ns3")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c36mj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f281c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0avf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_c36mj")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
