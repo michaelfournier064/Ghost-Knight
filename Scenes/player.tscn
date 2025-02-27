@@ -1,43 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfh2oaamlewrs"]
+[gd_scene load_steps=5 format=3 uid="uid://cpckha7r7h1kx"]
 
-[ext_resource type="Texture2D" uid="uid://dw1slo0ggacaq" path="res://Assets/PlayerAnimations/idle1_1-Sheet.png" id="1_h5ns3"]
+[ext_resource type="Script" path="res://Code/player.gd" id="1_1kidw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f281c"]
-atlas = ExtResource("1_h5ns3")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyrei"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t0avf"]
-atlas = ExtResource("1_h5ns3")
-region = Rect2(48, 0, 48, 48)
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ndhxs"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_c36mj"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f281c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t0avf")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"roll",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-}]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wb6u"]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_1kidw")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_c36mj")
-animation = &"idle"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.320931, 0.881413, 0.0992576)
+shape = SubResource("CapsuleShape3D_jyrei")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.320931, 0.881413, 0.0992576)
+mesh = SubResource("CapsuleMesh_ndhxs")
+material = SubResource("StandardMaterial3D_8wb6u")
