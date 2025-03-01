@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://drja3i82khked"]
+
+[ext_resource type="Script" path="res://Code/title_screen.gd" id="1_u3bu6"]
+[ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
+
+[node name="titleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u3bu6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -804.0
+offset_right = 960.0
+offset_bottom = 804.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_jmir7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+light_mask = 0
+layout_mode = 2
+alignment = 1
+
+[node name="gameTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "[GAME TITLE GOES HERE]"
+horizontal_alignment = 1
+
+[node name="play" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Play From Last Save"
+flat = true
+
+[node name="load" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load Older Save"
+flat = true
+
+[node name="settings" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+flat = true
+
+[node name="quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit Game"
+flat = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]
