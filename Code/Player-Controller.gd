@@ -13,6 +13,8 @@ extends CharacterBody3D
 @export var can_jump : bool = true
 ## Can we hold to run?
 @export var can_sprint : bool = true
+## Can we Dash
+@export var can_dash : bool = true
 ## Can we press to enter freefly mode (noclip)?
 @export var can_freefly : bool = true
 #####################################################################################################################
@@ -41,6 +43,8 @@ extends CharacterBody3D
 @export var input_jump : String = "Jump"
 ## Name of Input Action to Sprint.
 @export var input_sprint : String = "Sprint"
+## name of Input Action to Dash
+@export var input_dash : String = "Dash"
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
 
@@ -52,6 +56,8 @@ var freeflying : bool = false
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
+@onready var Animate: AnimationPlayer = $"Placeholder art/AnimationPlayer"
+
 
 func _ready() -> void:
 	check_input_mappings()
@@ -79,6 +85,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	
 	
+	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
@@ -90,11 +97,13 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
+			Animate.play("Jump_Land")
 			velocity += get_gravity() * delta
 
 	# Apply jumping
 	if can_jump:
 		if Input.is_action_just_pressed(input_jump) and is_on_floor():
+			Animate.play("Jump_Start")
 			velocity.y = jump_velocity
 
 	# Modify speed based on sprinting
@@ -107,6 +116,10 @@ func _physics_process(delta: float) -> void:
 	if can_move:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if move_dir == Vector3.ZERO:
+			Animate.play("Idle_Combat")
+		if !move_dir == Vector3.ZERO:
+			Animate.play("Walking_D_Skeletons")
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
 			velocity.z = move_dir.z * move_speed
@@ -116,6 +129,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
+	
+	if can_dash and Input.is_action_pressed("Dash"):
+		velocity += Vector3.FORWARD
 		
 	# Use velocity to actually move
 	move_and_slide()
@@ -147,7 +163,6 @@ func disable_freefly():
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	mouse_captured = true
-
 
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
