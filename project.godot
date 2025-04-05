@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Software Engineering Game"
-run/main_scene="res://Scenes/titleScreen.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+run/main_scene="res://Scenes/TitleScreen.tscn"
+config/features=PackedStringArray("4.4", "Forward Plus")
 
 [rendering]
 
