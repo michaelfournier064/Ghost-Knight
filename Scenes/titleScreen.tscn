@@ -32,6 +32,21 @@ func _ready() -> void:
 	play.add_theme_stylebox_override(\"pressed\", empty_style)
 	play.add_theme_stylebox_override(\"focus\", empty_style)
 
+	load_button.add_theme_stylebox_override(\"normal\", empty_style)
+	load_button.add_theme_stylebox_override(\"hover\", empty_style)
+	load_button.add_theme_stylebox_override(\"pressed\", empty_style)
+	load_button.add_theme_stylebox_override(\"focus\", empty_style)
+
+	settings.add_theme_stylebox_override(\"normal\", empty_style)
+	settings.add_theme_stylebox_override(\"hover\", empty_style)
+	settings.add_theme_stylebox_override(\"pressed\", empty_style)
+	settings.add_theme_stylebox_override(\"focus\", empty_style)
+
+	quit.add_theme_stylebox_override(\"normal\", empty_style)
+	quit.add_theme_stylebox_override(\"hover\", empty_style)
+	quit.add_theme_stylebox_override(\"pressed\", empty_style)
+	quit.add_theme_stylebox_override(\"focus\", empty_style)
+
 func _on_play_pressed() -> void:
 	await get_tree().create_timer(0.1).timeout  # Short delay for button sound
 	print(\"Play button pressed.\")

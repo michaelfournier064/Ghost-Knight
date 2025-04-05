@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cym2n8ot4575o"]
-
-[ext_resource type="Script" uid="uid://c570phga3f6lr" path="res://Code/customButton.gd" id="1"]
-
-[node name="CustomButton" type="Control"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1")

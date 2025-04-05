@@ -3,7 +3,6 @@ extends Control
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 @onready var v_box_container: VBoxContainer = $MarginContainer/VBoxContainer
 @onready var game_title: Label = $MarginContainer/VBoxContainer/gameTitle
-# Assuming you’ve replaced standard Buttons with your custom button scenes
 @onready var play: Control = $MarginContainer/VBoxContainer/PlayButton
 @onready var load_button: Control = $MarginContainer/VBoxContainer/LoadButton
 @onready var settings: Control = $MarginContainer/VBoxContainer/SettingsButton
