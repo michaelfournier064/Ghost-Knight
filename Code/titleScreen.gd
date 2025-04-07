@@ -1,41 +1,58 @@
 extends Control
 
-@onready var background_music: AudioStreamPlayer = $BackgroundMusic
+@onready var click_sound: AudioStreamPlayer = $clickSound
 @onready var v_box_container: VBoxContainer = $MarginContainer/VBoxContainer
 @onready var game_title: Label = $MarginContainer/VBoxContainer/gameTitle
-@onready var play: Control = $MarginContainer/VBoxContainer/PlayButton
-@onready var load_button: Control = $MarginContainer/VBoxContainer/LoadButton
-@onready var settings: Control = $MarginContainer/VBoxContainer/SettingsButton
-@onready var quit: Control = $MarginContainer/VBoxContainer/QuitButton
-@onready var click_sound: AudioStreamPlayer = $clickSound
+@onready var play: Button = $MarginContainer/VBoxContainer/play
+@onready var load_button: Button = $MarginContainer/VBoxContainer/load_button
+@onready var settings: Button = $MarginContainer/VBoxContainer/settings
+@onready var quit: Button = $MarginContainer/VBoxContainer/quit
 
 func _ready() -> void:
-	# Adjust game title size.
+	# Adjust game title size
 	game_title.add_theme_font_size_override("font_size", 50)
+	# Adjust button font sizes
+	play.add_theme_font_size_override("font_size", 20)
+	load_button.add_theme_font_size_override("font_size", 20)
+	settings.add_theme_font_size_override("font_size", 20)
+	quit.add_theme_font_size_override("font_size", 20)
 	
-	# Connect signals using Callables.
-	play.connect("pressed", Callable(self, "_on_play_pressed"))
-	load_button.connect("pressed", Callable(self, "_on_load_pressed"))
-	settings.connect("pressed", Callable(self, "_on_settings_pressed"))
-	quit.connect("pressed", Callable(self, "_on_quit_pressed"))
-	
-	# Optionally, connect mouse_entered signals for playing a click sound.
-	play.connect("mouse_entered", Callable(self, "_on_button_mouse_entered"))
-	load_button.connect("mouse_entered", Callable(self, "_on_button_mouse_entered"))
-	settings.connect("mouse_entered", Callable(self, "_on_button_mouse_entered"))
-	quit.connect("mouse_entered", Callable(self, "_on_button_mouse_entered"))
+	# Remove button styles for a flat appearance
+	var empty_style := StyleBoxEmpty.new()
+	play.add_theme_stylebox_override("normal", empty_style)
+	play.add_theme_stylebox_override("hover", empty_style)
+	play.add_theme_stylebox_override("pressed", empty_style)
+	play.add_theme_stylebox_override("focus", empty_style)
+
+	load_button.add_theme_stylebox_override("normal", empty_style)
+	load_button.add_theme_stylebox_override("hover", empty_style)
+	load_button.add_theme_stylebox_override("pressed", empty_style)
+	load_button.add_theme_stylebox_override("focus", empty_style)
+
+	settings.add_theme_stylebox_override("normal", empty_style)
+	settings.add_theme_stylebox_override("hover", empty_style)
+	settings.add_theme_stylebox_override("pressed", empty_style)
+	settings.add_theme_stylebox_override("focus", empty_style)
+
+	quit.add_theme_stylebox_override("normal", empty_style)
+	quit.add_theme_stylebox_override("hover", empty_style)
+	quit.add_theme_stylebox_override("pressed", empty_style)
+	quit.add_theme_stylebox_override("focus", empty_style)
 
 func _on_play_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/MainPlayer.tscn")
 	print("Play button pressed.")
 
 func _on_load_pressed() -> void:
 	print("Load button pressed.")
 
 func _on_settings_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Settings.tscn")
 	print("Settings button pressed.")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+	print("Quit button pressed.")
 
 func _on_button_mouse_entered() -> void:
 	if click_sound.playing:
