@@ -7,7 +7,7 @@
 [sub_resource type="GDScript" id="1"]
 script/source = "extends Control
 
-@onready var background_music: AudioStreamPlayer = $backgroundMusic
+@onready var background_music: AudioStreamPlayer = $MenuBackgroundMusic
 @onready var click_sound: AudioStreamPlayer = $clickSound
 @onready var v_box_container: VBoxContainer = $MarginContainer/VBoxContainer
 @onready var game_title: Label = $MarginContainer/VBoxContainer/gameTitle
@@ -131,7 +131,7 @@ size_flags_horizontal = 4
 text = "Quit Game"
 flat = true
 
-[node name="backgroundMusic" type="AudioStreamPlayer" parent="."]
+[node name="MenuBackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_j2hnd")
 volume_db = -19.048
 pitch_scale = 0.73
