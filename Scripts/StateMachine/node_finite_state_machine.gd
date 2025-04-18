@@ -3,7 +3,6 @@ extends Node
 
 @export var initial_node_state : NodeState
 
-
 var node_states : Dictionary = {}
 var current_node_state : NodeState
 var current_node_state_name : String
