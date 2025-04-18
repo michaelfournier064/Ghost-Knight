@@ -4,6 +4,9 @@
 # Happy prototyping!
 
 extends CharacterBody3D
+
+class_name Player
+
 @export_group("WhatCanYouDO")
 ## Can we move around?
 @export var can_move : bool = true
@@ -16,7 +19,7 @@ extends CharacterBody3D
 ## Can we Dash
 @export var can_dash : bool = true
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = true
+@export var can_freefly : bool = false
 #####################################################################################################################
 @export_group("Speeds")
 ## Look around rotation speed.
@@ -97,7 +100,6 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
-			Animate.play("Jump_Land")
 			velocity += get_gravity() * delta
 
 	# Apply jumping

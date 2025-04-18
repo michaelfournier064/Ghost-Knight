@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cny85skp87wdj"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1_81k8a"]
+[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="2_fu4at"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_81k8a"]
+sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
+sky_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
+ground_bottom_color = Color(0.257629, 0.131559, 0.152702, 1)
+ground_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
+energy_multiplier = 0.25
+
+[sub_resource type="Sky" id="Sky_fu4at"]
+sky_material = SubResource("ProceduralSkyMaterial_81k8a")
+
+[sub_resource type="Environment" id="Environment_aqlmp"]
+background_mode = 2
+sky = SubResource("Sky_fu4at")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bvkv5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_81k8a"]
+size = Vector3(15, 1, 15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fu4at"]
+size = Vector3(15, 1, 15)
+
+[node name="First Level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_aqlmp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.25038, -0.505856, 0.825482, 0, 0.85264, 0.522499, -0.968148, 0.130823, -0.213484, 0, 0, 0)
+light_color = Color(0.525, 0.650417, 0.7, 1)
+light_energy = 2.5
+shadow_enabled = true
+directional_shadow_max_distance = 800.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_bvkv5")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Floor"]
+mesh = SubResource("BoxMesh_81k8a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_fu4at")
+
+[node name="Player" parent="." instance=ExtResource("1_81k8a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00109665, 0.503657, 0.0594122)
+
+[node name="Enemy" parent="." instance=ExtResource("2_fu4at")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15398, 0.618236, -6.45229)

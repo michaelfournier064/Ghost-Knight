@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://hjixmihtvesy"]
+[gd_scene load_steps=5 format=3 uid="uid://hjixmihtvesy"]
 
 [ext_resource type="Script" uid="uid://dch56i83eyd4d" path="res://Code/TitleScreen.gd" id="1_n15yj"]
 [ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
+[ext_resource type="AudioStream" uid="uid://dw3jm70ayjkhb" path="res://Assets/horror-background-music-302076.mp3" id="4_ap1vi"]
 [ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="4_clicksound"]
 
 [node name="titleScreen" type="Control"]
@@ -78,6 +79,10 @@ flat = true
 [node name="clickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_clicksound")
 pitch_scale = 3.0
+
+[node name="Horror-background-music-302076" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ap1vi")
+autoplay = true
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/play" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
