@@ -40,7 +40,7 @@ func _ready() -> void:
 	quit.add_theme_stylebox_override("focus", empty_style)
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/MainPlayer.tscn")
+	get_tree().change_scene_to_file("res://Scenes/tutorialLevelGameplay.tscn")
 	print("Play button pressed.")
 
 func _on_load_pressed() -> void:
