@@ -115,7 +115,9 @@ func _physics_process(delta: float) -> void:
 	
 	if can_attack:
 		if Input.is_action_just_pressed("Attack"):
-			pass
+			attack_box.monitorable = true
+			attack_box.monitoring = true
+			attack_timer.start()
 
 	# Modify speed based on sprinting
 	if can_sprint and is_on_floor() and Input.is_action_pressed(input_sprint):
