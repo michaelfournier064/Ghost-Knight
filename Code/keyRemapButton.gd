@@ -1,10 +1,10 @@
 extends Button
-## The input‑action this button is responsible for
 @export var action_name : String = ""
 
-var _waiting_for_key := false     # true while we are listening
+var _waiting_for_key := false
 
 func _ready() -> void:
+	add_to_group("key_remap_button")
 	_refresh_caption()
 	pressed.connect(_on_pressed)
 
@@ -52,15 +52,15 @@ func _apply_new_binding(event : InputEvent) -> void:
 	_refresh_caption()
 
 func _refresh_caption() -> void:
-	# Show the *first* key bound to this action (empty → ask user)
 	var events := InputMap.action_get_events(action_name)
-	if events.size() == 0:
+	if events.is_empty():
 		text = "Bind"
 		return
+
 	var e := events[0]
 	if e is InputEventKey:
-		text = OS.get_keycode_string(e.keycode)
+		text = OS.get_keycode_string(e.physical_keycode)   # ← use physical_keycode
 	elif e is InputEventMouseButton:
-		text = "Mouse " + str(e.button_index)
+		text = "Mouse " + str(e.button_index)
 	else:
 		text = "Set…"

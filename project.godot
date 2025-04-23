@@ -14,6 +14,10 @@ config/name="Software Engineering Game"
 run/main_scene="res://Scenes/TitleScreen.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
+[autoload]
+
+SettingsLoader="*res://Code/SettingsLoader.gd"
+
 [display]
 
 window/size/viewport_width=1920

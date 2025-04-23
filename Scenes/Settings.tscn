@@ -56,7 +56,7 @@ alignment = 1
 
 [node name="AudioVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="AudioSettingsLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox"]
@@ -73,7 +73,6 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Master"
-horizontal_alignment = 2
 
 [node name="MasterVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer"]
 layout_mode = 2
@@ -89,7 +88,6 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Music"
-horizontal_alignment = 2
 
 [node name="MusicVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer"]
 layout_mode = 2
@@ -105,13 +103,18 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "SFX"
-horizontal_alignment = 2
 
 [node name="SfxVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
+
+[node name="VBoxContainer" type="VBoxContainer" parent="backGroundImage/MainVBox"]
+layout_mode = 2
+
+[node name="EmptyLineLabel" type="Label" parent="backGroundImage/MainVBox/VBoxContainer"]
+layout_mode = 2
 
 [node name="ControlsVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
 layout_mode = 2
@@ -121,7 +124,7 @@ size_flags_vertical = 4
 [node name="ControlsLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "Controls"
+text = "Input Control Bindings"
 horizontal_alignment = 1
 
 [node name="LeftHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
