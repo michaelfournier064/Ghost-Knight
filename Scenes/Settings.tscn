@@ -39,9 +39,6 @@ text = "Save Changes"
 stream = ExtResource("4")
 pitch_scale = 3.0
 
-# ───────────────────────────────────────────────────────────────
-# Main VBox (centred)
-# ───────────────────────────────────────────────────────────────
 [node name="MainVBox" type="VBoxContainer" parent="backGroundImage"]
 layout_mode = 1
 anchors_preset = 8
@@ -49,17 +46,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -829.5
+offset_left = -86.5
 offset_top = -199.0
-offset_right = 829.5
+offset_right = 86.5
 offset_bottom = 199.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-# ─── AUDIO  ────────────────────────────────────────────────────
 [node name="AudioVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="AudioSettingsLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox"]
 layout_mode = 2
@@ -115,9 +113,10 @@ size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
 
-# ─── CONTROLS  ─────────────────────────────────────────────────
 [node name="ControlsVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="ControlsLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
@@ -125,103 +124,110 @@ theme_override_font_sizes/font_size = 25
 text = "Controls"
 horizontal_alignment = 1
 
-# Helper macro‑style comment: each row = HBox(Label, Button)
-
-# ROW: Left
 [node name="LeftHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="LeftLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/LeftHBox"]
 layout_mode = 2
 text = "Left"
+
 [node name="LeftRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/LeftHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Left"
 
-# ROW: Right
 [node name="RightHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="RightLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/RightHBox"]
 layout_mode = 2
 text = "Right"
+
 [node name="RightRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/RightHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Right"
 
-# ROW: Forward
 [node name="ForwardHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="ForwardLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/ForwardHBox"]
 layout_mode = 2
 text = "Forward"
+
 [node name="ForwardRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/ForwardHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Forward"
 
-# ROW: Back
 [node name="BackHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="BackLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/BackHBox"]
 layout_mode = 2
 text = "Back"
+
 [node name="BackRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/BackHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Back"
 
-# ROW: Jump
-[node name="JumpHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
-layout_mode = 2
-[node name="JumpLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
-layout_mode = 2
-text = "Jump"
-[node name="JumpRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
-layout_mode = 2
-script = ExtResource("2")
-action_name = "Jump"
-
-# ROW: Sprint
 [node name="SprintHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="SprintLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/SprintHBox"]
 layout_mode = 2
 text = "Sprint"
+
 [node name="SprintRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/SprintHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Sprint"
 
-# ROW: Dash
 [node name="DashHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="DashLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/DashHBox"]
 layout_mode = 2
 text = "Dash"
+
 [node name="DashRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/DashHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Dash"
 
-# ROW: Attack
 [node name="AttackHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="AttackLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/AttackHBox"]
 layout_mode = 2
 text = "Attack"
+
 [node name="AttackRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/AttackHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Attack"
 
-# ROW: Freefly
 [node name="FreeflyHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
 layout_mode = 2
+
 [node name="FreeflyLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/FreeflyHBox"]
 layout_mode = 2
 text = "Freefly"
+
 [node name="FreeflyRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/FreeflyHBox"]
 layout_mode = 2
 script = ExtResource("2")
 action_name = "Freefly"
+
+[node name="JumpHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="JumpLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
+layout_mode = 2
+text = "Jump"
+
+[node name="JumpRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Jump"

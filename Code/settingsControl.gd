@@ -5,14 +5,14 @@ extends Control
 @onready var click_sound     : AudioStreamPlayer = $backGroundImage/clickSound
 
 # ─── AUDIO SLIDERS ─────────────────────────────────────────────
-@onready var master_slider : HSlider = $backGroundImage/VBoxContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider
-@onready var music_slider  : HSlider = $backGroundImage/VBoxContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider
-@onready var sfx_slider    : HSlider = $backGroundImage/VBoxContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider
+@onready var master_slider : HSlider = $backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer/MasterVolumeSlider
+@onready var music_slider  : HSlider = $backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer/MusicVolumeSlider
+@onready var sfx_slider    : HSlider = $backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer/SfxVolumeSlider
 
 const CONFIG_FILE := "user://settings.cfg"
 
 # ---------------------------------------------------------------------------
-#  INPUT‑ACTIONS : keep in sync with Player‑Controller.gd exported variables
+#  INPUT-ACTIONS : keep in sync with Player-Controller.gd exported variables
 # ---------------------------------------------------------------------------
 const ACTIONS := {
 	"Left":    KEY_A,
@@ -23,7 +23,7 @@ const ACTIONS := {
 	"Sprint":  KEY_SHIFT,
 	"Dash":    KEY_Q,
 	"Attack":  {"mouse": MOUSE_BUTTON_LEFT},
-	"freefly": KEY_F,
+	"Freefly": KEY_F,
 }
 
 # ===========================================================================
@@ -75,7 +75,7 @@ func _on_sfx_volume_changed(v: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(v))
 
 # ---------------------------------------------------------------------------
-#  INPUT‑ACTION HOUSEKEEPING
+#  INPUT-ACTION HOUSEKEEPING
 # ---------------------------------------------------------------------------
 func _ensure_default_keys() -> void:
 	for action_name in ACTIONS.keys():
@@ -98,7 +98,7 @@ func _ensure_default_keys() -> void:
 				InputMap.action_add_event(action_name, ev)
 
 # ---------------------------------------------------------------------------
-#  SAVE / LOAD
+#  SAVE / LOAD
 # ---------------------------------------------------------------------------
 func _save_settings() -> void:
 	var cfg := ConfigFile.new()
