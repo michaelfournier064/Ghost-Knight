@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://hjixmihtvesy"]
+[gd_scene load_steps=5 format=3 uid="uid://bcbsqow0xpx5f"]
 
 [ext_resource type="Script" uid="uid://dch56i83eyd4d" path="res://Code/titleScreen.gd" id="1_n15yj"]
 [ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
