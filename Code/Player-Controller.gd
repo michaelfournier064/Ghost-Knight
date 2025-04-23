@@ -4,6 +4,9 @@
 # Happy prototyping!
 
 extends CharacterBody3D
+
+class_name Player
+
 @export_group("WhatCanYouDO")
 ## Can we move around?
 @export var can_move : bool = true
@@ -15,8 +18,10 @@ extends CharacterBody3D
 @export var can_sprint : bool = true
 ## Can we Dash
 @export var can_dash : bool = true
+## Can we Dash
+@export var can_attack : bool = true
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = true
+@export var can_freefly : bool = false
 #####################################################################################################################
 @export_group("Speeds")
 ## Look around rotation speed.
@@ -45,6 +50,8 @@ extends CharacterBody3D
 @export var input_sprint : String = "Sprint"
 ## name of Input Action to Dash
 @export var input_dash : String = "Dash"
+## blah
+@export var input_attack : String = "Attack"
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
 
@@ -57,12 +64,15 @@ var freeflying : bool = false
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var Animate: AnimationPlayer = $"Placeholder art/AnimationPlayer"
-
+@onready var attack_timer: Timer = $"Attack Timer"
+@onready var attack_box: Area3D = $AttackBox
 
 func _ready() -> void:
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+	attack_box.monitoring = false
+	attack_box.monitorable = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -84,8 +94,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	
-	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
@@ -97,7 +105,6 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
-			Animate.play("Jump_Land")
 			velocity += get_gravity() * delta
 
 	# Apply jumping
@@ -105,6 +112,12 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed(input_jump) and is_on_floor():
 			Animate.play("Jump_Start")
 			velocity.y = jump_velocity
+	
+	if can_attack:
+		if Input.is_action_just_pressed("Attack"):
+			attack_box.monitorable = true
+			attack_box.monitoring = true
+			attack_timer.start()
 
 	# Modify speed based on sprinting
 	if can_sprint and is_on_floor() and Input.is_action_pressed(input_sprint):
