@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="4"]
 
 [node name="Settings" type="Control"]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,6 +31,10 @@ offset_bottom = 69.0
 [node name="ReturnMainMenuButton" type="Button" parent="backGroundImage/ReturnSaveVBoxContainer"]
 layout_mode = 2
 text = "Return to Main Menu"
+
+[node name="ReturnToGameButton" type="Button" parent="backGroundImage/ReturnSaveVBoxContainer"]
+layout_mode = 2
+text = "Return to Game"
 
 [node name="SaveChangesButton" type="Button" parent="backGroundImage/ReturnSaveVBoxContainer"]
 layout_mode = 2

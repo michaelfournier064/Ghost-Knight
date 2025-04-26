@@ -1,8 +1,10 @@
+# settingsControl.gd
 extends Control
 
 @onready var returnMainMenu : Button            = $backGroundImage/ReturnSaveVBoxContainer/ReturnMainMenuButton
-@onready var saveChanges     : Button            = $backGroundImage/ReturnSaveVBoxContainer/SaveChangesButton
-@onready var click_sound     : AudioStreamPlayer = $backGroundImage/clickSound
+@onready var returnToGame   : Button            = $backGroundImage/ReturnSaveVBoxContainer/ReturnToGameButton
+@onready var saveChanges    : Button            = $backGroundImage/ReturnSaveVBoxContainer/SaveChangesButton
+@onready var click_sound    : AudioStreamPlayer = $backGroundImage/clickSound
 
 @onready var master_slider : HSlider = $backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer/MasterVolumeSlider
 @onready var music_slider  : HSlider = $backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer/MusicVolumeSlider
@@ -20,11 +22,12 @@ const ACTIONS := {
 	"Freefly": KEY_F,
 }
 
-# ─────────────── READY ───────────────
 func _ready() -> void:
 	returnMainMenu.pressed.connect(_on_returnMainMenu_pressed)
+	returnToGame.pressed.connect(_on_returnToGame_pressed)
 	saveChanges.pressed.connect(_on_saveChanges_pressed)
 	returnMainMenu.mouse_entered.connect(_on_button_mouse_entered)
+	returnToGame.mouse_entered.connect(_on_button_mouse_entered)
 	saveChanges.mouse_entered.connect(_on_button_mouse_entered)
 
 	_ensure_default_keys()
@@ -32,8 +35,16 @@ func _ready() -> void:
 	_sync_gui_to_current_settings()
 
 # ────────── BUTTON CALLBACKS ─────────
+
 func _on_returnMainMenu_pressed() -> void:
+	# Un-pause before switching scenes
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/TitleScreen.tscn")
+
+func _on_returnToGame_pressed() -> void:
+	# Un-pause and close the settings UI
+	get_tree().paused = false
+	queue_free()
 
 func _on_saveChanges_pressed() -> void:
 	SettingsLoader.save_settings()
@@ -45,6 +56,7 @@ func _on_button_mouse_entered() -> void:
 	click_sound.play()
 
 # ─────────────── AUDIO ───────────────
+
 func _connect_volume_sliders() -> void:
 	var tree := AudioServer
 	master_slider.value = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Master")))
@@ -65,6 +77,7 @@ func _on_sfx_volume_changed(v: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(v))
 
 # ─────── DEFAULT KEY SETUP ───────
+
 func _ensure_default_keys() -> void:
 	for action_name in ACTIONS.keys():
 		if not InputMap.has_action(action_name):
@@ -85,6 +98,7 @@ func _ensure_default_keys() -> void:
 				InputMap.action_add_event(action_name, ev)
 
 # ───────── GUI SYNC (no file I/O) ─────────
+
 func _sync_gui_to_current_settings() -> void:
 	var tree := AudioServer
 	master_slider.value = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Master")))
