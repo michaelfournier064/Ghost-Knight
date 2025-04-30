@@ -1,57 +1,181 @@
-[gd_scene load_steps=10 format=3 uid="uid://cny85skp87wdj"]
+[gd_scene load_steps=31 format=3 uid="uid://cny85skp87wdj"]
 
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1_81k8a"]
-[ext_resource type="Script" uid="uid://unljglvo4202" path="res://Code/generalLevelUI.gd" id="1_aqlmp"]
-[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="2_fu4at"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
+[ext_resource type="Script" uid="uid://unljglvo4202" path="res://Code/generalLevelUI.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cln5fmfmlcv8g" path="res://Models/HauntedHouse.glb" id="4"]
+[ext_resource type="PackedScene" uid="uid://ddinprg0ek3c8" path="res://Models/dead_tree.glb" id="5"]
+[ext_resource type="PackedScene" uid="uid://11fbamjcbsh8" path="res://Models/twisted_tree.glb" id="6"]
+[ext_resource type="PackedScene" uid="uid://bvdd4runevw7o" path="res://Models/gravestone.glb" id="7"]
+[ext_resource type="PackedScene" uid="uid://cqw278twy1n2q" path="res://Models/fence.glb" id="8"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Audio/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
+[ext_resource type="Script" uid="uid://coxd88ksdekqs" path="res://code/door.gd" id="11"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_81k8a"]
+; Procedural sky for atmosphere
+[sub_resource type="ProceduralSkyMaterial" id="12"]
 sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
 sky_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
 ground_bottom_color = Color(0.257629, 0.131559, 0.152702, 1)
 ground_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
 energy_multiplier = 0.25
 
-[sub_resource type="Sky" id="Sky_fu4at"]
-sky_material = SubResource("ProceduralSkyMaterial_81k8a")
+[sub_resource type="Sky" id="13"]
+sky_material = SubResource("12")
 
-[sub_resource type="Environment" id="Environment_aqlmp"]
+[sub_resource type="Environment" id="14"]
 background_mode = 2
-sky = SubResource("Sky_fu4at")
+sky = SubResource("13")
 tonemap_mode = 2
 glow_enabled = true
+ambient_light_color = Color(0.2, 0.2, 0.25, 1)
+ambient_light_energy = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.05
+volumetric_fog_albedo = Color(0.7, 0.7, 0.8, 1)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bvkv5"]
+[sub_resource type="PhysicsMaterial" id="15"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_81k8a"]
-size = Vector3(15, 1, 15)
+; Floor mesh and half-extents collision
+[sub_resource type="BoxMesh" id="16"]
+size = Vector3(100, 1, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fu4at"]
-size = Vector3(15, 1, 15)
+[sub_resource type="BoxShape3D" id="17"]
+size = Vector3(50, 0.5, 50)
 
+; House collision
+[sub_resource type="BoxShape3D" id="18"]
+size = Vector3(10, 5, 10)
+
+; Gravestone collision
+[sub_resource type="BoxShape3D" id="19"]
+size = Vector3(0.5, 1, 0.3)
+
+; Fence collision
+[sub_resource type="BoxShape3D" id="20"]
+size = Vector3(4, 1, 0.1)
+
+; Tree collisions
+[sub_resource type="BoxShape3D" id="21"]
+size = Vector3(0.8, 4, 0.8)
+
+; Door trigger area
+[sub_resource type="BoxShape3D" id="22"]
+size = Vector3(1, 2, 0.5)
+
+; Root node
 [node name="First Level" type="Node3D"]
-script = ExtResource("1_aqlmp")
+script = ExtResource("2")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_aqlmp")
+; World environment
+[node name="WorldEnvironment" type="WorldEnvironment" parent="First Level"]
+environment = SubResource("14")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.25038, -0.505856, 0.825482, 0, 0.85264, 0.522499, -0.968148, 0.130823, -0.213484, 0, 0, 0)
+; Moonlight
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="First Level"]
 light_color = Color(0.525, 0.650417, 0.7, 1)
-light_energy = 2.5
+light_energy = 0.3
 shadow_enabled = true
 directional_shadow_max_distance = 800.0
+transform = Transform3D(
+	-0.25038, -0.505856, 0.825482,
+	0, 0.85264, 0.522499,
+	-0.968148, 0.130823, -0.213484,
+	0, 0, 0
+)
 
-[node name="Floor" type="StaticBody3D" parent="."]
-physics_material_override = SubResource("PhysicsMaterial_bvkv5")
+; Floor
+[node name="Floor" type="StaticBody3D" parent="First Level"]
+physics_material_override = SubResource("15")
+collision_layer = 1
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("16")
+[node name="FloorColl" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("17")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Floor"]
-mesh = SubResource("BoxMesh_81k8a")
+; Player and Enemy instances on layer 1
+[node name="Player" parent="First Level" instance=ExtResource("1")]
+collision_layer = 1
+collision_mask = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("BoxShape3D_fu4at")
+[node name="Enemy" parent="First Level" instance=ExtResource("3")]
+collision_layer = 1
+collision_mask = 1
 
-[node name="Player" parent="." instance=ExtResource("1_81k8a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00109665, 0.503657, 0.0594122)
+; Haunted house
+[node name="HauntedHouse" type="Node3D" parent="First Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -5)
 
-[node name="Enemy" parent="." instance=ExtResource("2_fu4at")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15398, 0.618236, -6.45229)
+[node name="HouseBody" type="StaticBody3D" parent="HauntedHouse"]
+collision_layer = 1
+[node name="HouseModel" parent="HauntedHouse/HouseBody" instance=ExtResource("4")]
+[node name="HouseColl" type="CollisionShape3D" parent="HauntedHouse/HouseBody"]
+shape = SubResource("18")
+
+; Graveyard
+[node name="Graveyard" type="Node3D" parent="First Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -12)
+
+[node name="Stone1" type="StaticBody3D" parent="Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+collision_layer = 1
+[node name="Stone1Model" parent="Graveyard/Stone1" instance=ExtResource("7")]
+[node name="Stone1Coll" type="CollisionShape3D" parent="Graveyard/Stone1"]
+shape = SubResource("19")
+
+[node name="Stone2" type="StaticBody3D" parent="Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+collision_layer = 1
+[node name="Stone2Model" parent="Graveyard/Stone2" instance=ExtResource("7")]
+[node name="Stone2Coll" type="CollisionShape3D" parent="Graveyard/Stone2"]
+shape = SubResource("19")
+
+[node name="Fence1" type="StaticBody3D" parent="Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+collision_layer = 1
+[node name="Fence1Model" parent="Graveyard/Fence1" instance=ExtResource("8")]
+[node name="Fence1Coll" type="CollisionShape3D" parent="Graveyard/Fence1"]
+shape = SubResource("20")
+
+; Forest
+[node name="Forest" type="Node3D" parent="First Level"]
+
+[node name="DeadTree" type="StaticBody3D" parent="Forest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
+collision_layer = 1
+[node name="DeadTreeModel" parent="Forest/DeadTree" instance=ExtResource("5")]
+[node name="DeadTreeColl" type="CollisionShape3D" parent="Forest/DeadTree"]
+shape = SubResource("21")
+
+[node name="TwistedTree" type="StaticBody3D" parent="Forest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4)
+collision_layer = 1
+[node name="TwistedTreeModel" parent="Forest/TwistedTree" instance=ExtResource("6")]
+[node name="TwistedTreeColl" type="CollisionShape3D" parent="Forest/TwistedTree"]
+shape = SubResource("21")
+
+; Interactive door trigger
+[node name="Interactive" type="Node3D" parent="First Level"]
+
+[node name="DoorTriggerArea" type="Area3D" parent="Interactive"]
+script = ExtResource("11")
+collision_layer = 1
+collision_mask = 1
+
+[node name="DoorTriggerShape" type="CollisionShape3D" parent="Interactive/DoorTriggerArea"]
+shape = SubResource("22")
+
+; Ambient audio
+[node name="Audio" type="Node3D" parent="First Level"]
+
+[node name="AmbientWind" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("9")
+autoplay = true
+volume_db = -4
+collision_layer = 1
+
+[node name="Whispers" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("10")
+autoplay = true
+volume_db = -8
+collision_layer = 1
