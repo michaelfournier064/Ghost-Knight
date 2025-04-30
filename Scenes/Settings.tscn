@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://settings"]
+[gd_scene load_steps=5 format=3 uid="uid://btxbdosdgxckp"]
 
 [ext_resource type="Script" uid="uid://bflp7liemaxi4" path="res://Code/settingsControl.gd" id="1"]
 [ext_resource type="Script" uid="uid://du0ieubv1cykq" path="res://Code/keyRemapButton.gd" id="2"]

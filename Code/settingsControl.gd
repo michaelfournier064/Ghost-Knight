@@ -1,9 +1,8 @@
-# settingsControl.gd
 extends Control
 
-@onready var returnMainMenu : Button            = $backGroundImage/ReturnSaveVBoxContainer/ReturnMainMenuButton
-@onready var returnToGame   : Button            = $backGroundImage/ReturnSaveVBoxContainer/ReturnToGameButton
-@onready var saveChanges    : Button            = $backGroundImage/ReturnSaveVBoxContainer/SaveChangesButton
+@onready var returnMainMenu : Button = $backGroundImage/ReturnSaveVBoxContainer/ReturnMainMenuButton
+@onready var returnToGame   : Button = $backGroundImage/ReturnSaveVBoxContainer/ReturnToGameButton
+@onready var saveChanges    : Button = $backGroundImage/ReturnSaveVBoxContainer/SaveChangesButton
 @onready var click_sound    : AudioStreamPlayer = $backGroundImage/clickSound
 
 @onready var master_slider : HSlider = $backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer/MasterVolumeSlider
@@ -18,35 +17,28 @@ const ACTIONS := {
 	"Jump": KEY_SPACE,
 	"Sprint": KEY_SHIFT,
 	"Dash": KEY_Q,
-	"Attack": {"mouse": MOUSE_BUTTON_LEFT},
-	"Freefly": KEY_F,
 }
 
 func _ready() -> void:
-	returnMainMenu.pressed.connect(_on_returnMainMenu_pressed)
-	returnToGame.pressed.connect(_on_returnToGame_pressed)
-	saveChanges.pressed.connect(_on_saveChanges_pressed)
-	returnMainMenu.mouse_entered.connect(_on_button_mouse_entered)
-	returnToGame.mouse_entered.connect(_on_button_mouse_entered)
-	saveChanges.mouse_entered.connect(_on_button_mouse_entered)
+	returnMainMenu.pressed.connect(_on_return_main_menu_button_pressed)
+	returnToGame.pressed.connect(_on_return_to_game_button_pressed)
+	saveChanges.pressed.connect(_on_save_changes_pressed)
 
-	_ensure_default_keys()
-	_connect_volume_sliders()
-	_sync_gui_to_current_settings()
-
-# ────────── BUTTON CALLBACKS ─────────
-
-func _on_returnMainMenu_pressed() -> void:
-	# Un-pause before switching scenes
+func _on_return_main_menu_button_pressed() -> void:
+	click_sound.play()
 	get_tree().paused = false
+	emit_signal("settings_closed")
 	get_tree().change_scene_to_file("res://Scenes/TitleScreen.tscn")
-
-func _on_returnToGame_pressed() -> void:
-	# Un-pause and close the settings UI
-	get_tree().paused = false
 	queue_free()
 
-func _on_saveChanges_pressed() -> void:
+func _on_return_to_game_button_pressed() -> void:
+	click_sound.play()
+	get_tree().paused = false
+	emit_signal("settings_closed")
+	queue_free()
+
+func _on_save_changes_pressed() -> void:
+	click_sound.play()
 	SettingsLoader.save_settings()
 	print("Settings saved →", SettingsLoader.CONFIG_FILE)
 
