@@ -9,6 +9,8 @@ extends Control
 # @onready var music_slider  : HSlider = $backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer/MusicVolumeSlider
 # @onready var sfx_slider    : HSlider = $backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer/SfxVolumeSlider
 
+signal settings_closed
+
 const ACTIONS := {
 	"Left": KEY_A,
 	"Right": KEY_D,

@@ -1,3 +1,4 @@
+# File: res://Code/titleScreen.gd
 extends Control
 
 const SETTINGS_SCENE := preload("res://Scenes/Settings.tscn")
@@ -29,7 +30,8 @@ func _on_settings_pressed() -> void:
 		return  # already opened
 	_settings_ui = SETTINGS_SCENE.instantiate()
 	_settings_ui.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	_settings_ui.connect("settings_closed", _on_settings_closed)
+	# Use Callable to bind the callback correctly:
+	_settings_ui.connect("settings_closed", Callable(self, "_on_settings_closed"))
 	get_tree().get_root().add_child(_settings_ui)
 	get_tree().paused = true
 
