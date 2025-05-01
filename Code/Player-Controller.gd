@@ -21,8 +21,6 @@ class_name Player
 @export var can_dash : bool = true
 ## Can we Dash
 @export var can_attack : bool = true
-## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
 #####################################################################################################################
 @export_group("Speeds")
 ## Look around rotation speed.
@@ -33,8 +31,6 @@ class_name Player
 @export var jump_velocity : float = 4.5
 ## How fast do we run?
 @export var sprint_speed : float = 10.0
-## How fast do we freefly?
-@export var freefly_speed : float = 25.0
 #####################################################################################################################
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
@@ -53,13 +49,10 @@ class_name Player
 @export var input_dash : String = "Dash"
 ## blah
 @export var input_attack : String = "Attack"
-## Name of Input Action to toggle freefly mode.
-@export var input_freefly : String = "freefly"
 
 var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
-var freeflying : bool = false
 var attack_cooldown := 0.5
 
 ## IMPORTANT REFERENCES
@@ -87,12 +80,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if mouse_captured and event is InputEventMouseMotion:
 		rotate_look(event.relative)
 	
-	# Toggle freefly mode
-	if can_freefly and Input.is_action_just_pressed(input_freefly):
-		if not freeflying:
-			enable_freefly()
-		else:
-			disable_freefly()
 
 func _physics_process(delta: float) -> void:
 	# attack input
@@ -100,13 +87,6 @@ func _physics_process(delta: float) -> void:
 		Animate.play("1H_Melee_Attack_Stab")
 		preform_attack()
 	
-	# If freeflying, handle freefly and nothing else
-	if can_freefly and freeflying:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		motion *= freefly_speed * delta
-		move_and_collide(motion)
-		return
 	
 	# Apply gravity to velocity
 	if has_gravity:
@@ -163,14 +143,6 @@ func rotate_look(rot_input : Vector2):
 	head.rotate_x(look_rotation.x)
 
 
-func enable_freefly():
-	collider.disabled = true
-	freeflying = true
-	velocity = Vector3.ZERO
-
-func disable_freefly():
-	collider.disabled = false
-	freeflying = false
 
 
 func capture_mouse():
@@ -220,6 +192,3 @@ func check_input_mappings():
 	if can_sprint and not InputMap.has_action(input_sprint):
 		push_error("Sprinting disabled. No InputAction found for input_sprint: " + input_sprint)
 		can_sprint = false
-	if can_freefly and not InputMap.has_action(input_freefly):
-		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
-		can_freefly = false
