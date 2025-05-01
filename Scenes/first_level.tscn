@@ -1,54 +1,61 @@
-[gd_scene load_steps=10 format=3 uid="uid://cny85skp87wdj"]
+[gd_scene load_steps=12 format=3 uid="uid://cny85skp87wdj"]
 
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1_81k8a"]
-[ext_resource type="Script" uid="uid://unljglvo4202" path="res://Code/generalLevelUI.gd" id="1_aqlmp"]
-[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="2_fu4at"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
+[ext_resource type="Script" uid="uid://unljglvo4202" path="res://Code/generalLevelUI.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Audio/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_81k8a"]
+[sub_resource type="ProceduralSkyMaterial" id="12"]
 sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
 sky_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
 ground_bottom_color = Color(0.257629, 0.131559, 0.152702, 1)
 ground_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
 energy_multiplier = 0.25
 
-[sub_resource type="Sky" id="Sky_fu4at"]
-sky_material = SubResource("ProceduralSkyMaterial_81k8a")
+[sub_resource type="Sky" id="13"]
+sky_material = SubResource("12")
 
-[sub_resource type="Environment" id="Environment_aqlmp"]
+[sub_resource type="Environment" id="14"]
 background_mode = 2
-sky = SubResource("Sky_fu4at")
+sky = SubResource("13")
+ambient_light_color = Color(0.2, 0.2, 0.25, 1)
+ambient_light_energy = 0.5
 tonemap_mode = 2
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.7, 0.7, 0.8, 1)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bvkv5"]
+[sub_resource type="PhysicsMaterial" id="15"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_81k8a"]
-size = Vector3(15, 1, 15)
+[sub_resource type="BoxMesh" id="16"]
+size = Vector3(100, 1, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fu4at"]
-size = Vector3(15, 1, 15)
+[sub_resource type="BoxShape3D" id="17"]
+size = Vector3(50, 0.5, 50)
 
 [node name="First Level" type="Node3D"]
-script = ExtResource("1_aqlmp")
+script = ExtResource("2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_aqlmp")
+environment = SubResource("14")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.25038, -0.505856, 0.825482, 0, 0.85264, 0.522499, -0.968148, 0.130823, -0.213484, 0, 0, 0)
 light_color = Color(0.525, 0.650417, 0.7, 1)
-light_energy = 2.5
+light_energy = 0.3
 shadow_enabled = true
 directional_shadow_max_distance = 800.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
-physics_material_override = SubResource("PhysicsMaterial_bvkv5")
+physics_material_override = SubResource("15")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Floor"]
-mesh = SubResource("BoxMesh_81k8a")
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
+mesh = SubResource("16")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("BoxShape3D_fu4at")
+[node name="FloorColl" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
+shape = SubResource("17")
 
 [node name="Player" parent="." instance=ExtResource("1_81k8a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00109665, 0.503657, 0.0594122)
@@ -61,3 +68,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.376078, 0.618236, -6.20645)
 
 [node name="Enemy3" parent="." instance=ExtResource("2_fu4at")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.89739, 0.618236, -6.0703)
+
+[node name="Audio" type="Node3D" parent="."]
+
+[node name="AmbientWind" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("9")
+volume_db = -4.0
+autoplay = true
+
+[node name="Whispers" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("10")
+volume_db = -8.0
+autoplay = true
