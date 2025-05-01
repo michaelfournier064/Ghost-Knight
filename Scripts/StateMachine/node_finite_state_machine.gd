@@ -3,7 +3,6 @@ extends Node
 
 @export var initial_node_state : NodeState
 
-
 var node_states : Dictionary = {}
 var current_node_state : NodeState
 var current_node_state_name : String
@@ -45,4 +44,3 @@ func transition_to(node_state_name :  String):
 	
 	current_node_state = new_node_state
 	current_node_state_name = current_node_state.name.to_lower()
-	

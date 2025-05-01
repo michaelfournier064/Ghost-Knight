@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://cny85skp87wdj"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6"  path="res://Scenes/MainPlayer.tscn" id="1"]
+[ext_resource type="Script"      uid="uid://unljglvo4202"   path="res://Code/generalLevelUI.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba"   path="res://Enemy/enemy.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae"   path="res://Audio/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8"  path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
+
+[sub_resource type="ProceduralSkyMaterial" id="12"]
+sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
+sky_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
+ground_bottom_color = Color(0.257629, 0.131559, 0.152702, 1)
+ground_horizon_color = Color(0.412271, 0.366927, 0.398487, 1)
+energy_multiplier = 0.25
+
+[sub_resource type="Sky" id="13"]
+sky_material = SubResource("12")
+
+[sub_resource type="Environment" id="14"]
+background_mode = 2
+sky = SubResource("13")
+ambient_light_color = Color(0.2, 0.2, 0.25, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.7, 0.7, 0.8, 1)
+
+[sub_resource type="PhysicsMaterial" id="15"]
+
+[sub_resource type="BoxMesh" id="16"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="17"]
+size = Vector3(50, 0.5, 50)
+
+[node name="First Level" type="Node3D"]
+script = ExtResource("2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("14")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_color = Color(0.525, 0.650417, 0.7, 1)
+light_energy = 0.3
+shadow_enabled = true
+directional_shadow_max_distance = 800.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("15")
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
+mesh = SubResource("16")
+
+[node name="FloorColl" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
+shape = SubResource("17")
+
+[node name="Player" parent="." instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00109665, 0.503657, 0.0594122)
+
+[node name="Enemy" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15398, 0.618236, -6.45229)
+
+[node name="Enemy2" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.376078, 0.618236, -6.20645)
+
+[node name="Enemy3" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.89739, 0.618236, -6.0703)
+
+[node name="Audio" type="Node3D" parent="."]
+
+[node name="AmbientWind" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("9")
+volume_db = -4.0
+autoplay = true
+
+[node name="Whispers" type="AudioStreamPlayer3D" parent="Audio"]
+stream = ExtResource("10")
+volume_db = -8.0
+autoplay = true

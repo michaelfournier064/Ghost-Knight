@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://settings"]
+[gd_scene load_steps=5 format=3 uid="uid://btxbdosdgxckp"]
 
 [ext_resource type="Script" uid="uid://bflp7liemaxi4" path="res://Code/settingsControl.gd" id="1"]
 [ext_resource type="Script" uid="uid://du0ieubv1cykq" path="res://Code/keyRemapButton.gd" id="2"]
-[ext_resource type="Texture2D" uid="uid://b02mvi4l3wi18" path="res://Assets/1400581-new-horror-wallpaper-1920x1080-large-resolution.jpg" id="2_w1nw0"]
-[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="3_yrknh"]
+[ext_resource type="Texture2D" uid="uid://b02mvi4l3wi18" path="res://Assets/1400581-new-horror-wallpaper-1920x1080-large-resolution.jpg" id="3"]
+[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="4"]
 
 [node name="Settings" type="Control"]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,114 +16,12 @@ grow_vertical = 2
 script = ExtResource("1")
 
 [node name="backGroundImage" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("2_w1nw0")
+texture = ExtResource("3")
 expand_mode = 1
 stretch_mode = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="backGroundImage"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -376.0
-offset_top = -104.5
-offset_right = 376.0
-offset_bottom = 104.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AudioSettingsLabel" type="Label" parent="backGroundImage/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Audio Settings"
-horizontal_alignment = 1
-
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="backGroundImage/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="MasterVolumeLabel" type="Label" parent="backGroundImage/VBoxContainer/MasterVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Master"
-horizontal_alignment = 2
-
-[node name="MasterVolumeSlider" type="HSlider" parent="backGroundImage/VBoxContainer/MasterVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="MusicVolumeContainer" type="HBoxContainer" parent="backGroundImage/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="MusicVolumeLabel" type="Label" parent="backGroundImage/VBoxContainer/MusicVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Music"
-horizontal_alignment = 2
-
-[node name="MusicVolumeSlider" type="HSlider" parent="backGroundImage/VBoxContainer/MusicVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="SfxVolumeContainer" type="HBoxContainer" parent="backGroundImage/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="SfxVolumeLabel" type="Label" parent="backGroundImage/VBoxContainer/SfxVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "SFX"
-horizontal_alignment = 2
-
-[node name="SfxVolumeSlider" type="HSlider" parent="backGroundImage/VBoxContainer/SfxVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="ControlsContainer" type="VBoxContainer" parent="backGroundImage/VBoxContainer"]
-layout_mode = 2
-
-[node name="ControlsLabel" type="Label" parent="backGroundImage/VBoxContainer/ControlsContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Controls"
-horizontal_alignment = 1
-
-[node name="JumpRemapContainer" type="HBoxContainer" parent="backGroundImage/VBoxContainer/ControlsContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="JumpLabel" type="Label" parent="backGroundImage/VBoxContainer/ControlsContainer/JumpRemapContainer"]
-layout_mode = 2
-text = "Jump"
-
-[node name="JumpRemapButton" type="Button" parent="backGroundImage/VBoxContainer/ControlsContainer/JumpRemapContainer"]
-layout_mode = 2
-script = ExtResource("2")
-action_name = "jump"
-
-[node name="SprintRemapContainer2" type="HBoxContainer" parent="backGroundImage/VBoxContainer/ControlsContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="SprintLabel" type="Label" parent="backGroundImage/VBoxContainer/ControlsContainer/SprintRemapContainer2"]
-layout_mode = 2
-text = "Sprint"
-
-[node name="SprintRemap" type="Button" parent="backGroundImage/VBoxContainer/ControlsContainer/SprintRemapContainer2"]
-layout_mode = 2
-script = ExtResource("2")
-action_name = "sprint"
 
 [node name="ReturnSaveVBoxContainer" type="VBoxContainer" parent="backGroundImage"]
 layout_mode = 1
@@ -133,10 +32,210 @@ offset_bottom = 69.0
 layout_mode = 2
 text = "Return to Main Menu"
 
+[node name="ReturnToGameButton" type="Button" parent="backGroundImage/ReturnSaveVBoxContainer"]
+layout_mode = 2
+text = "Return to Game"
+
 [node name="SaveChangesButton" type="Button" parent="backGroundImage/ReturnSaveVBoxContainer"]
 layout_mode = 2
 text = "Save Changes"
 
 [node name="clickSound" type="AudioStreamPlayer" parent="backGroundImage"]
-stream = ExtResource("3_yrknh")
+stream = ExtResource("4")
 pitch_scale = 3.0
+
+[node name="MainVBox" type="VBoxContainer" parent="backGroundImage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.5
+offset_top = -199.0
+offset_right = 86.5
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AudioVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="AudioSettingsLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Audio Settings"
+horizontal_alignment = 1
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="backGroundImage/MainVBox/AudioVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="MasterVolumeLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+; [node name="MusicVolumeContainer" type="HBoxContainer" parent="backGroundImage/MainVBox/AudioVBox"]
+; layout_mode = 2
+; alignment = 1
+
+; [node name="MusicVolumeLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer"]
+; layout_mode = 2
+; size_flags_horizontal = 3
+; text = "Music"
+
+; [node name="MusicVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer"]
+; layout_mode = 2
+; size_flags_horizontal = 3
+; max_value = 1.0
+; step = 0.01
+
+; [node name="SfxVolumeContainer" type="HBoxContainer" parent="backGroundImage/MainVBox/AudioVBox"]
+; layout_mode = 2
+; alignment = 1
+
+; [node name="SfxVolumeLabel" type="Label" parent="backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer"]
+; layout_mode = 2
+; size_flags_horizontal = 3
+; text = "SFX"
+
+; [node name="SfxVolumeSlider" type="HSlider" parent="backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer"]
+; layout_mode = 2
+; size_flags_horizontal = 3
+; max_value = 1.0
+; step = 0.01
+
+[node name="VBoxContainer" type="VBoxContainer" parent="backGroundImage/MainVBox"]
+layout_mode = 2
+
+[node name="EmptyLineLabel" type="Label" parent="backGroundImage/MainVBox/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsVBox" type="VBoxContainer" parent="backGroundImage/MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ControlsLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Input Control Bindings"
+horizontal_alignment = 1
+
+[node name="LeftHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="LeftLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/LeftHBox"]
+layout_mode = 2
+text = "Left"
+
+[node name="LeftRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/LeftHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Left"
+
+[node name="RightHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="RightLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/RightHBox"]
+layout_mode = 2
+text = "Right"
+
+[node name="RightRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/RightHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Right"
+
+[node name="ForwardHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="ForwardLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/ForwardHBox"]
+layout_mode = 2
+text = "Forward"
+
+[node name="ForwardRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/ForwardHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Forward"
+
+[node name="BackHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="BackLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/BackHBox"]
+layout_mode = 2
+text = "Back"
+
+[node name="BackRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/BackHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Back"
+
+[node name="SprintHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="SprintLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/SprintHBox"]
+layout_mode = 2
+text = "Sprint"
+
+[node name="SprintRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/SprintHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Sprint"
+
+[node name="DashHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="DashLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/DashHBox"]
+layout_mode = 2
+text = "Dash"
+
+[node name="DashRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/DashHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Dash"
+
+[node name="AttackHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="AttackLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/AttackHBox"]
+layout_mode = 2
+text = "Attack"
+
+[node name="AttackRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/AttackHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Attack"
+
+[node name="FreeflyHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="FreeflyLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/FreeflyHBox"]
+layout_mode = 2
+text = "Freefly"
+
+[node name="FreeflyRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/FreeflyHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Freefly"
+
+[node name="JumpHBox" type="HBoxContainer" parent="backGroundImage/MainVBox/ControlsVBox"]
+layout_mode = 2
+
+[node name="JumpLabel" type="Label" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
+layout_mode = 2
+text = "Jump"
+
+[node name="JumpRemapButton" type="Button" parent="backGroundImage/MainVBox/ControlsVBox/JumpHBox"]
+layout_mode = 2
+script = ExtResource("2")
+action_name = "Jump"
