@@ -6,8 +6,8 @@ extends Control
 @onready var click_sound    : AudioStreamPlayer = $backGroundImage/clickSound
 
 @onready var master_slider : HSlider = $backGroundImage/MainVBox/AudioVBox/MasterVolumeContainer/MasterVolumeSlider
-@onready var music_slider  : HSlider = $backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer/MusicVolumeSlider
-@onready var sfx_slider    : HSlider = $backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer/SfxVolumeSlider
+# @onready var music_slider  : HSlider = $backGroundImage/MainVBox/AudioVBox/MusicVolumeContainer/MusicVolumeSlider
+# @onready var sfx_slider    : HSlider = $backGroundImage/MainVBox/AudioVBox/SfxVolumeContainer/SfxVolumeSlider
 
 const ACTIONS := {
 	"Left": KEY_A,
@@ -20,6 +20,10 @@ const ACTIONS := {
 }
 
 func _ready() -> void:
+	_connect_volume_sliders()
+	_ensure_default_keys()
+	_sync_gui_to_current_settings()
+
 	returnMainMenu.pressed.connect(_on_return_main_menu_button_pressed)
 	returnToGame.pressed.connect(_on_return_to_game_button_pressed)
 	saveChanges.pressed.connect(_on_save_changes_pressed)
@@ -39,7 +43,7 @@ func _on_return_to_game_button_pressed() -> void:
 
 func _on_save_changes_pressed() -> void:
 	click_sound.play()
-	SettingsAutoloader.save_settings()
+	SettingsLoader.save_settings()
 	print("Settings saved →", SettingsLoader.CONFIG_FILE)
 
 func _on_button_mouse_entered() -> void:
@@ -52,21 +56,21 @@ func _on_button_mouse_entered() -> void:
 func _connect_volume_sliders() -> void:
 	var tree := AudioServer
 	master_slider.value = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Master")))
-	music_slider.value  = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Music")))
-	sfx_slider.value    = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("SFX")))
+	# music_slider.value  = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Music")))
+	# sfx_slider.value    = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("SFX")))
 
 	master_slider.value_changed.connect(_on_master_volume_changed)
-	music_slider.value_changed.connect(_on_music_volume_changed)
-	sfx_slider.value_changed.connect(_on_sfx_volume_changed)
+	# music_slider.value_changed.connect(_on_music_volume_changed)
+	# sfx_slider.value_changed.connect(_on_sfx_volume_changed)
 
 func _on_master_volume_changed(v: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(v))
 
-func _on_music_volume_changed(v: float) -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(v))
+# func _on_music_volume_changed(v: float) -> void:
+# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(v))
 
-func _on_sfx_volume_changed(v: float) -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(v))
+# func _on_sfx_volume_changed(v: float) -> void:
+# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(v))
 
 # ─────── DEFAULT KEY SETUP ───────
 
@@ -94,8 +98,8 @@ func _ensure_default_keys() -> void:
 func _sync_gui_to_current_settings() -> void:
 	var tree := AudioServer
 	master_slider.value = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Master")))
-	music_slider.value  = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Music")))
-	sfx_slider.value    = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("SFX")))
+	# music_slider.value  = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("Music")))
+	# sfx_slider.value    = db_to_linear(tree.get_bus_volume_db(tree.get_bus_index("SFX")))
 
 	for btn in get_tree().get_nodes_in_group("key_remap_button"):
 		if btn.has_method("_refresh_caption"):

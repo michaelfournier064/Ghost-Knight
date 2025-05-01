@@ -1,5 +1,4 @@
 extends Node
-class_name SettingsLoader
 
 const CONFIG_FILE := "user://settings.cfg"
 
@@ -24,7 +23,7 @@ func load_settings() -> void:
 
 	# ---- audio ----
 	if cfg.has_section("audio"):
-		var bus_map := {"master":"Master", "music":"Music", "sfx":"SFX"}
+		var bus_map := {"master":"Master"}		#, "music":"Music", "sfx":"SFX"}
 		for key in bus_map.keys():
 			var v := float(cfg.get_value("audio", key, 1.0))
 			AudioServer.set_bus_volume_db(
@@ -61,10 +60,10 @@ func save_settings() -> void:
 	# current bus volumes
 	cfg.set_value("audio", "master",
 		db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master"))))
-	cfg.set_value("audio", "music",
-		db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music"))))
-	cfg.set_value("audio", "sfx",
-		db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX"))))
+	# cfg.set_value("audio", "music",
+	# 	db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music"))))
+	# cfg.set_value("audio", "sfx",
+	# 	db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX"))))
 
 	# first event for every registered action
 	for action in InputMap.get_actions():

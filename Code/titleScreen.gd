@@ -4,11 +4,11 @@ const SETTINGS_SCENE := preload("res://Scenes/Settings.tscn")
 var _settings_ui: Control = null
 
 @onready var horror_music: AudioStreamPlayer = $"Horror-background-music-302076"
-@onready var click_sound:  AudioStreamPlayer = $clickSound
-@onready var play:         Button = $MarginContainer/VBoxContainer/play
-@onready var load_button:  Button = $MarginContainer/VBoxContainer/load_button
-@onready var settings_btn: Button = $MarginContainer/VBoxContainer/settings
-@onready var quit:         Button = $MarginContainer/VBoxContainer/quit
+@onready var click_sound:  AudioStreamPlayer     = $clickSound
+@onready var play:         Button                = $MarginContainer/VBoxContainer/play
+@onready var load_button:  Button                = $MarginContainer/VBoxContainer/load_button
+@onready var settings_btn: Button                = $MarginContainer/VBoxContainer/settings
+@onready var quit:         Button                = $MarginContainer/VBoxContainer/quit
 
 func _ready() -> void:
 	$MarginContainer/VBoxContainer/gameTitle.add_theme_font_size_override("font_size", 50)
@@ -17,12 +17,6 @@ func _ready() -> void:
 		var empty = StyleBoxEmpty.new()
 		for state in ["normal", "hover", "pressed", "focus"]:
 			btn.add_theme_stylebox_override(state, empty)
-		btn.mouse_entered.connect(_on_button_mouse_entered)
-
-	play.pressed.connect(_on_play_pressed)
-	load_button.pressed.connect(_on_load_pressed)
-	settings_btn.pressed.connect(_on_settings_pressed)
-	quit.pressed.connect(_on_quit_pressed)
 
 func _on_play_pressed() -> void:
 	click_sound.play()
@@ -45,11 +39,11 @@ func _on_quit_pressed() -> void:
 
 func _on_load_pressed() -> void:
 	click_sound.play()
-	# Implement load logic here
+	# TODO: Implement load logic
 
 func _on_button_mouse_entered() -> void:
 	click_sound.play()
 
-func _on_settings_closed():
+func _on_settings_closed() -> void:
 	get_tree().paused = false
 	_settings_ui = null
