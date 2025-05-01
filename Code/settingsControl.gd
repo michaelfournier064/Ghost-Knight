@@ -39,7 +39,7 @@ func _on_return_to_game_button_pressed() -> void:
 
 func _on_save_changes_pressed() -> void:
 	click_sound.play()
-	SettingsLoader.save_settings()
+	SettingsAutoloader.save_settings()
 	print("Settings saved →", SettingsLoader.CONFIG_FILE)
 
 func _on_button_mouse_entered() -> void:

@@ -1,4 +1,5 @@
 extends Node
+class_name SettingsLoader
 
 const CONFIG_FILE := "user://settings.cfg"
 
