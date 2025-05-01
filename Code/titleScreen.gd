@@ -1,5 +1,6 @@
 extends Control
 
+@onready var horror_background_music: AudioStreamPlayer = $"Horror-background-music-302076"
 @onready var click_sound: AudioStreamPlayer = $clickSound
 @onready var v_box_container: VBoxContainer = $MarginContainer/VBoxContainer
 @onready var game_title: Label = $MarginContainer/VBoxContainer/gameTitle
@@ -16,6 +17,7 @@ func _ready() -> void:
 	load_button.add_theme_font_size_override("font_size", 20)
 	settings.add_theme_font_size_override("font_size", 20)
 	quit.add_theme_font_size_override("font_size", 20)
+	horror_background_music.play()
 	
 	# Remove button styles for a flat appearance
 	var empty_style := StyleBoxEmpty.new()
@@ -40,7 +42,7 @@ func _ready() -> void:
 	quit.add_theme_stylebox_override("focus", empty_style)
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/MainPlayer.tscn")
+	get_tree().change_scene_to_file("res://Scenes/first_level.tscn")
 	print("Play button pressed.")
 
 func _on_load_pressed() -> void:
