@@ -12,6 +12,7 @@ signal settings_closed
 func _ready() -> void:
 	SettingsLoaderSingleton.load_settings()
 	# configure slider
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	master_slider.min_value = 0.0
 	master_slider.max_value = 1.0
 	master_slider.step      = 0.01

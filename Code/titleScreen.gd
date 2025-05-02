@@ -13,6 +13,7 @@ var _settings_ui: Control = null
 @onready var quit:         Button            = $MarginContainer/VBoxContainer/quit
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	# Style title & buttons
 	$MarginContainer/VBoxContainer/gameTitle.add_theme_font_size_override("font_size", 50)
 	for btn in [play, load_button, settings_btn, quit]:
