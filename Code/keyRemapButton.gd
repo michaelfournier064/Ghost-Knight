@@ -1,5 +1,5 @@
 extends Button
-@export var action_name : String = ""
+@export var action_name: String = ""
 
 var _waiting_for_key := false
 
@@ -8,47 +8,38 @@ func _ready() -> void:
 	_refresh_caption()
 	pressed.connect(_on_pressed)
 
-# ─────────────────────────────────────────────────────────────
-# 1.  User clicks the button  → enter “listening mode”
-# ─────────────────────────────────────────────────────────────
 func _on_pressed() -> void:
 	if _waiting_for_key:
 		return
 	_waiting_for_key = true
 	text = "Press any key…"
-	set_process_unhandled_input(true)   # Start listening for raw key events
+	set_process_input(true)
 
-# ─────────────────────────────────────────────────────────────
-# 2.  First Key (or Mouse Button) the user hits  → remap
-# ─────────────────────────────────────────────────────────────
-func _unhandled_input(event : InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if not _waiting_for_key:
-		return                         # Only react while we’re waiting
-	if event is InputEventKey and event.pressed and not event.echo:
+		return
+
+	var handled := false
+	if event is InputEventKey and event.pressed and not event.is_echo():
 		_apply_new_binding(event)
+		handled = true
 	elif event is InputEventMouseButton and event.pressed:
 		_apply_new_binding(event)
+		handled = true
 
-	#   prevent other UI from also consuming this first event
-	if _waiting_for_key:
-		accept_event()
+	if handled:
+		get_viewport().set_input_as_handled()
 
-# ─────────────────────────────────────────────────────────────
-# 3.  Replace the action’s events, update caption, stop listening
-# ─────────────────────────────────────────────────────────────
-func _apply_new_binding(event : InputEvent) -> void:
-	#  Make a clean copy so we don’t keep “echo” or “pressed” flags around
+func _apply_new_binding(event: InputEvent) -> void:
 	var evt := event.duplicate()
-	evt.echo = false
-	evt.pressed = false
+	if evt is InputEventKey:
+		evt.echo = false   # only keys have `echo`
 
-	#  Wipe old bindings and add the new one
 	InputMap.action_erase_events(action_name)
 	InputMap.action_add_event(action_name, evt)
 
-	#  UI cleanup
 	_waiting_for_key = false
-	set_process_unhandled_input(false)
+	set_process_input(false)
 	_refresh_caption()
 
 func _refresh_caption() -> void:
@@ -57,10 +48,10 @@ func _refresh_caption() -> void:
 		text = "Bind"
 		return
 
-	var e := events[0]
-	if e is InputEventKey:
-		text = OS.get_keycode_string(e.physical_keycode)   # ← use physical_keycode
-	elif e is InputEventMouseButton:
-		text = "Mouse " + str(e.button_index)
+	var ev := events[0]
+	if ev is InputEventKey:
+		text = OS.get_keycode_string(ev.keycode)
+	elif ev is InputEventMouseButton:
+		text = "Mouse %d" % ev.button_index
 	else:
 		text = "Set…"

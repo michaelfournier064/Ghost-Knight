@@ -10,32 +10,35 @@ class_name Player
 @export var can_sprint : bool = true
 @export var can_dash : bool = true
 @export var can_attack : bool = true
-@export var can_freefly : bool = false
-
+#####################################################################################################################
 @export_group("Speeds")
 @export var look_speed    : float = 0.002
 @export var base_speed    : float = 7.0
 @export var jump_velocity : float = 4.5
-@export var sprint_speed  : float = 10.0
-@export var freefly_speed : float = 25.0
+## How fast do we run?
+@export var sprint_speed : float = 10.0
+## Strength of the dash impulse
 @export var dash_strength : float = 15.0
-
+#####################################################################################################################
 @export_group("Input Actions")
 @export var input_left    : String = "Left"
 @export var input_right   : String = "Right"
 @export var input_forward : String = "Forward"
-@export var input_back    : String = "Back"
-@export var input_jump    : String = "Jump"
-@export var input_sprint  : String = "Sprint"
-@export var input_dash    : String = "Dash"
-@export var input_attack  : String = "Attack"
-@export var input_freefly : String = "freefly"
+## Name of Input Action to move Backward.
+@export var input_back : String = "Back"
+## Name of Input Action to Jump.
+@export var input_jump : String = "Jump"
+## Name of Input Action to Sprint.
+@export var input_sprint : String = "Sprint"
+## name of Input Action to Dash
+@export var input_dash : String = "Dash"
+## blah
+@export var input_attack : String = "Attack"
 
-var mouse_captured : bool    = false
-var look_rotation  : Vector2
-var move_speed     : float   = 0.0
-var freeflying     : bool    = false
-var attack_cooldown          = 0.5
+var mouse_captured : bool = false
+var look_rotation : Vector2
+var move_speed : float = 0.0
+var attack_cooldown := 0.5
 
 @onready var head         : Node3D            = $Head
 @onready var collider     : CollisionShape3D = $Collider
@@ -56,12 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if mouse_captured and event is InputEventMouseMotion:
 		rotate_look(event.relative)
-
-	if can_freefly and Input.is_action_just_pressed(input_freefly):
-		if freeflying:
-			disable_freefly()
-		else:
-			enable_freefly()
+	
 
 func _physics_process(delta: float) -> void:
 	# —————————————————————————————————————
@@ -70,21 +68,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed(input_attack):
 		Animate.play("1H_Melee_Attack_Stab")
 		preform_attack()
-
-	# —————————————————————————————————————
-	# 2) Freefly (skip all the rest)
-	# —————————————————————————————————————
-	if can_freefly and freeflying:
-		var fly_dir = Input.get_vector(input_left, input_right, input_forward, input_back)
-		var fly_motion = (head.global_basis * Vector3(fly_dir.x, 0, fly_dir.y)).normalized()
-		move_and_collide(fly_motion * freefly_speed * delta)
-		return
-
-	# —————————————————————————————————————
-	# 3) Gravity & Jump
-	# —————————————————————————————————————
-	if has_gravity and not is_on_floor():
-		velocity += get_gravity() * delta
+	
+	
+	# Apply gravity to velocity
+	if has_gravity:
+		if not is_on_floor():
+			velocity += get_gravity() * delta
 
 	if can_jump and Input.is_action_just_pressed(input_jump) and is_on_floor():
 		Animate.play("Jump_Start")
@@ -136,14 +125,7 @@ func rotate_look(rot_input : Vector2):
 	head.transform.basis = Basis()
 	head.rotate_x(look_rotation.x)
 
-func enable_freefly():
-	collider.disabled = true
-	freeflying = true
-	velocity = Vector3.ZERO
 
-func disable_freefly():
-	collider.disabled = false
-	freeflying = false
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -190,6 +172,3 @@ func check_input_mappings():
 	if can_sprint and not InputMap.has_action(input_sprint):
 		push_error("Sprinting disabled. No InputAction for " + input_sprint)
 		can_sprint = false
-	if can_freefly and not InputMap.has_action(input_freefly):
-		push_error("Freefly disabled. No InputAction for " + input_freefly)
-		can_freefly = false
