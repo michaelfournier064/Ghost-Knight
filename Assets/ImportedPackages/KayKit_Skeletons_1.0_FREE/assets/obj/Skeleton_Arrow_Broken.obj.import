@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dwqrex3h4scde"
+path="res://.godot/imported/Skeleton_Arrow_Broken.obj-e516bf2181da694f6863619c1baa8721.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Skeleton_Arrow_Broken.obj-e516bf2181da694f6863619c1baa8721.mesh"]
+
+source_file="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/assets/obj/Skeleton_Arrow_Broken.obj"
+dest_files=["res://.godot/imported/Skeleton_Arrow_Broken.obj-e516bf2181da694f6863619c1baa8721.mesh", "res://.godot/imported/Skeleton_Arrow_Broken.obj-e516bf2181da694f6863619c1baa8721.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

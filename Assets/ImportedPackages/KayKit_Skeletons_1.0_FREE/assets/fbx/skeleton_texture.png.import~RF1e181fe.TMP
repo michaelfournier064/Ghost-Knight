@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b02mvi4l3wi18"
-path="res://.godot/imported/1400581-new-horror-wallpaper-1920x1080-large-resolution.jpg-77d1e6905fe48f2835fd3ef85cb1dabd.ctex"
+uid="uid://cv51ha555advo"
+path="res://.godot/imported/skeleton_texture.png-39d45589043178590408be4b8517cddc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/1400581-new-horror-wallpaper-1920x1080-large-resolution.jpg"
-dest_files=["res://.godot/imported/1400581-new-horror-wallpaper-1920x1080-large-resolution.jpg-77d1e6905fe48f2835fd3ef85cb1dabd.ctex"]
+source_file="res://Assets/KayKit_Skeletons_1.0_FREE/KayKit_Skeletons_1.0_FREE/assets/fbx/skeleton_texture.png"
+dest_files=["res://.godot/imported/skeleton_texture.png-39d45589043178590408be4b8517cddc.ctex"]
 
 [params]
 
