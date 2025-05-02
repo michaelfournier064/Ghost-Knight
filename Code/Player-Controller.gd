@@ -5,45 +5,48 @@ class_name Player
 @export var Health : int = 10
 
 @export_group("WhatCanYouDO")
-@export var can_move : bool = true
-@export var has_gravity : bool = true
-@export var can_jump : bool = true
+@export var can_move   : bool = true
+@export var has_gravity: bool = true
+@export var can_jump   : bool = true
 @export var can_sprint : bool = true
-@export var can_dash : bool = true
+@export var can_dash   : bool = true
 @export var can_attack : bool = true
 
 @export_group("Speeds")
-@export var look_speed : float = 0.002
-@export var base_speed : float = 7.0
+@export var look_speed    : float = 0.002
+@export var base_speed    : float = 7.0
 @export var jump_velocity : float = 4.5
-@export var sprint_speed : float = 10.0
+@export var sprint_speed  : float = 10.0
 @export var dash_strength : float = 15.0
-@export var attack_cooldown : float = 1.0
+@export var attack_cooldown: float = 1.0
 
 @export_group("Input Actions")
-@export var input_left : String = "Left"
-@export var input_right : String = "Right"
-@export var input_forward : String = "Forward"
-@export var input_back : String = "Back"
-@export var input_jump : String = "Jump"
+@export var input_left   : String = "Left"
+@export var input_right  : String = "Right"
+@export var input_forward: String = "Forward"
+@export var input_back   : String = "Back"
+@export var input_jump   : String = "Jump"
 @export var input_sprint : String = "Sprint"
-@export var input_dash : String = "Dash"
+@export var input_dash   : String = "Dash"
 @export var input_attack : String = "Attack"
 
 var mouse_captured : bool = false
 var look_rotation : Vector2
-var move_speed : float = 0.0
+var move_speed    : float = 0.0
 
-@onready var head         = $Head
-@onready var collider     = $Collider
-@onready var Animate      = $"Placeholder art/AnimationPlayer"
-@onready var attack_box   = $AttackBox
+@onready var head       = $Head
+@onready var collider   = $Collider
+@onready var Animate    = $"Placeholder art/AnimationPlayer"
+@onready var attack_box = $AttackBox
 
 func _ready() -> void:
     add_to_group("Player")
     look_rotation = Vector2(rotation.y, head.rotation.x)
-    attack_box.monitoring = false
-    attack_box.monitorable = false
+    # Ensure the box can detect bodies:
+    print("Enabling hit-box")
+    attack_box.monitoring = true
+    attack_box.monitoring  = false
+    attack_box.connect("body_entered", Callable(self, "_on_attack_box_body_entered"))
     check_input_mappings()
 
 func _unhandled_input(event: InputEvent) -> void:
