@@ -9,17 +9,26 @@ var _settings_ui: Control = null
 
 @export var spawn_area: AABB = AABB(Vector3(-20, 0.5, -20), Vector3(40, 0, 40))  # Floor-wide bounds
 var _spawn_timer: Timer
+var _win_timer: Timer 
 
 func _ready() -> void:
 	_assign_enemy_targets()
 
-	# Timer-based spawning
+	# spawning every 5s
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = 5.0
 	_spawn_timer.one_shot = false
 	_spawn_timer.timeout.connect(_spawn_enemy_randomly)
 	add_child(_spawn_timer)
 	_spawn_timer.start()
+
+	# ← NEW: 7-minute win timer
+	_win_timer = Timer.new()
+	_win_timer.wait_time = 7 * 60.0
+	_win_timer.one_shot = true
+	_win_timer.timeout.connect(_on_win_timer_timeout)
+	add_child(_win_timer)
+	_win_timer.start()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey \
@@ -55,3 +64,6 @@ func _spawn_enemy_randomly() -> void:
 	var rand_z = randf_range(spawn_area.position.z, spawn_area.position.z + spawn_area.size.z)
 	var pos = Vector3(rand_x, spawn_area.position.y, rand_z)
 	_spawn_enemy(pos)
+
+func _on_win_timer_timeout() -> void:
+	get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")

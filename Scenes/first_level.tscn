@@ -33,7 +33,7 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxShape3D" id="17"]
 size = Vector3(50, 0.5, 50)
 
-[node name="First Level" type="Node3D"]
+[node name="First Level" type="CharacterBody3D"]
 script = ExtResource("2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
