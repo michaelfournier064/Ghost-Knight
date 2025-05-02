@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://otc7g3kkbjsg"]
 
 [ext_resource type="Script" uid="uid://dch56i83eyd4d" path="res://Code/titleScreen.gd" id="1_n15yj"]
-[ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
-[ext_resource type="AudioStream" uid="uid://dw3jm70ayjkhb" path="res://Assets/horror-background-music-302076.mp3" id="4_ap1vi"]
-[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="4_clicksound"]
+[ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/Images/BackgroundImages/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
+[ext_resource type="AudioStream" uid="uid://dw3jm70ayjkhb" path="res://Assets/Sounds/BackgroundMusic/horror-background-music-302076.mp3" id="4_ap1vi"]
+[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/Sounds/UserInterfaceSounds/click_sound.mp3" id="4_clicksound"]
 
 [node name="titleScreen" type="Control"]
 layout_mode = 3
