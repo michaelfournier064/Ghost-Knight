@@ -45,8 +45,10 @@ func _assign_enemy_targets() -> void:
 func _spawn_enemy(at_position: Vector3) -> void:
 	var e = ENEMY_SCENE.instantiate()
 	e.global_transform.origin = at_position
-	e.target_path = player.get_path()
+	if e is RogueSkeletonEnemy:
+		e.target_path = player.get_path()
 	add_child(e)
+
 
 func _spawn_enemy_randomly() -> void:
 	var rand_x = randf_range(spawn_area.position.x, spawn_area.position.x + spawn_area.size.x)

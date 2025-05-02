@@ -12,6 +12,8 @@ height = 1.8
 size = Vector3(1, 1.28694, 1.81421)
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 1    ; Player
+collision_mask  = 20    ; Enemy (4) + Environment (16)
 script = ExtResource("1_vu2og")
 
 [node name="Placeholder art" parent="." instance=ExtResource("2_apx4a")]
@@ -128,8 +130,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.02804)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.02804)
 
 [node name="AttackBox" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 4
+collision_layer = 2    ; PlayerAttack
+collision_mask  = 4    ; Enemy
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackBox"]
