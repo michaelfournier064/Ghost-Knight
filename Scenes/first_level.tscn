@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://cny85skp87wdj"]
 
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6"  path="res://Scenes/MainPlayer.tscn" id="1"]
-[ext_resource type="Script"      uid="uid://unljglvo4202"   path="res://Code/generalLevelUI.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba"   path="res://Enemy/enemy.tscn" id="3"]
-[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae"   path="res://Audio/691806__atruna__wind.ogg" id="9"]
-[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8"  path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
+[ext_resource type="Script" uid="uid://unljglvo4202" path="res://Code/generalLevelUI.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://pbcm1rgyh5ba" path="res://Enemy/enemy.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Audio/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
 
 [sub_resource type="ProceduralSkyMaterial" id="12"]
 sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
@@ -60,15 +60,6 @@ shape = SubResource("17")
 [node name="Player" parent="." instance=ExtResource("1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00109665, 0.503657, 0.0594122)
 
-[node name="Enemy" parent="." instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15398, 0.618236, -6.45229)
-
-[node name="Enemy2" parent="." instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.376078, 0.618236, -6.20645)
-
-[node name="Enemy3" parent="." instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.89739, 0.618236, -6.0703)
-
 [node name="Audio" type="Node3D" parent="."]
 
 [node name="AmbientWind" type="AudioStreamPlayer3D" parent="Audio"]
@@ -80,3 +71,6 @@ autoplay = true
 stream = ExtResource("10")
 volume_db = -8.0
 autoplay = true
+
+[node name="Enemy" parent="." instance=ExtResource("3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.218872, 0.368236, -5.84277)

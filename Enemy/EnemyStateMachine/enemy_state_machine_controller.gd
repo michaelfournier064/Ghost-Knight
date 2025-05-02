@@ -14,3 +14,10 @@ func enter():
 
 func exit():
 	pass
+
+
+func _on_player_detection_body_entered(body: Node3D):
+	node_finite_state_machine.transition_to("follow")
+
+func _on_player_detection_body_exited(body: Node3D):
+	node_finite_state_machine.transition_to("idle")
