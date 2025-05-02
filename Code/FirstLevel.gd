@@ -1,97 +1,125 @@
-# File: res://Code/FirstLevel.gd
+# File: res://Scenes/FirstLevel.gd
 extends Node3D
 
-const SETTINGS_SCENE    = preload("res://Scenes/Settings.tscn")
-const ENEMY_SCENE       = preload("res://Scenes/Enemy.tscn")
+const SETTINGS_SCENE = preload("res://Scenes/Settings.tscn")
+const ENEMY_SCENE    = preload("res://Scenes/Enemy.tscn")
+const WIN_SCENE      = preload("res://Scenes/WinScreen.tscn")
+
+@export var spawn_area: AABB = AABB(Vector3(-20, 0.5, -20), Vector3(40, 0, 40))
+
 @onready var player: Player = $Player
-
-@export var spawn_area: AABB               = AABB(Vector3(-20, 0.5, -20), Vector3(40, 0, 40))
-@export var initial_spawn_interval: float  = 5.0
-@export var final_spawn_interval: float    = 1.0
-@export var initial_speed_factor: float    = 0.75
-@export var final_speed_factor: float      = 0.90
-
+var _settings_ui: Control
 var _spawn_timer: Timer
-var _win_timer: Timer
-var _log_timer: Timer
-var elapsed_time: float = 0.0  # in seconds
+var _win_timer:   Timer
 
 func _ready() -> void:
-    _assign_enemy_targets()
+	GameStateManager.load_state()
+	print("** After reset+load in FirstLevel._ready():")
+	print("   state[\"enemies\"]:", GameStateManager.state["enemies"])
+	print("   group count:", get_tree().get_nodes_in_group("enemies").size())
+	_apply_full_state()
+	_setup_timers()
+	set_process_unhandled_input(true)
 
-    # Spawn timer
-    _spawn_timer = Timer.new()
-    _spawn_timer.one_shot = false
-    _spawn_timer.timeout.connect(_spawn_enemy_randomly)
-    add_child(_spawn_timer)
-    _spawn_timer.wait_time = initial_spawn_interval
-    _spawn_timer.start()
+func _apply_full_state() -> void:
+	var s = GameStateManager.state
 
-    # Win timer (7 minutes)
-    _win_timer = Timer.new()
-    _win_timer.one_shot = true
-    _win_timer.wait_time = 7 * 60.0
-    _win_timer.timeout.connect(_on_win_timer_timeout)
-    add_child(_win_timer)
-    _win_timer.start()
+	# restore player position
+	player.global_transform.origin = GameStateManager._dict_to_vec3(s["player_pos"])
 
-    # Log timer (every 5 seconds)
-    _log_timer = Timer.new()
-    _log_timer.one_shot = false
-    _log_timer.wait_time = 5.0
-    _log_timer.timeout.connect(_on_log_timer_timeout)
-    add_child(_log_timer)
-    _log_timer.start()
+	# restore player health
+	if s["player_health"] != null:
+		player.Health = s["player_health"]
+	else:
+		player.Health = GameStateManager.state.player_defaults.max_health
+
+	# clear + respawn existing enemies
+	for e in get_tree().get_nodes_in_group("enemies"):
+		e.queue_free()
+	for data in s["enemies"]:
+		var e = ENEMY_SCENE.instantiate()
+		e.target_path = player.get_path()
+		e.global_transform.origin = Vector3(data.pos.x, data.pos.y, data.pos.z)
+		e.health = data.health
+		add_child(e)
+		e.add_to_group("enemies")
+
+func _setup_timers() -> void:
+	var s = GameStateManager.state
+
+	if _spawn_timer:
+		_spawn_timer.queue_free()
+	_spawn_timer = Timer.new()
+	_spawn_timer.one_shot = false
+	_spawn_timer.wait_time = s["spawn_interval"]
+	_spawn_timer.timeout.connect(_on_spawn_timer)
+	add_child(_spawn_timer)
+	_spawn_timer.start()
+
+	if _win_timer:
+		_win_timer.queue_free()
+	_win_timer = Timer.new()
+	_win_timer.one_shot = true
+	var remaining = s["win_time"] - s["elapsed_time"]
+	_win_timer.wait_time = max(remaining, 0.0)
+	_win_timer.timeout.connect(_on_win)
+	add_child(_win_timer)
+	_win_timer.start()
 
 func _process(delta: float) -> void:
-    elapsed_time += delta
+	GameStateManager.state["elapsed_time"] += delta
 
-func _assign_enemy_targets() -> void:
-    for child in get_children():
-        if child is Node and child.has_method("set_target_path"):
-            child.set_target_path(player.get_path())
+func _on_spawn_timer() -> void:
+	var s = GameStateManager.state
+	var ratio = min(s["elapsed_time"] / s["win_time"], 1.0)
+	var interval = lerp(s["spawn_interval"], s["min_spawn_interval"], ratio)
+	var speed_factor = lerp(s["enemy_speed_factor"], s["max_speed_factor"], ratio)
 
-func _spawn_enemy(at_position: Vector3) -> void:
-    var e = ENEMY_SCENE.instantiate()
-    e.global_transform.origin = at_position
-    if e is RogueSkeletonEnemy:
-        var ratio = min(elapsed_time / (6 * 60.0), 1.0)
-        var walk_speed = player.base_speed
-        var run_speed  = player.sprint_speed
-        var target_speed = lerp(initial_speed_factor * walk_speed,
-                                final_speed_factor * run_speed,
-                                ratio)
-        e.speed = target_speed
-        e.target_path = player.get_path()
-    add_child(e)
+	var pos = Vector3(
+		randf_range(spawn_area.position.x, spawn_area.position.x + spawn_area.size.x),
+		spawn_area.position.y,
+		randf_range(spawn_area.position.z, spawn_area.position.z + spawn_area.size.z)
+	)
+	var e = ENEMY_SCENE.instantiate()
+	e.target_path = player.get_path()
+	e.global_transform.origin = pos
+	e.speed = speed_factor * player.base_speed
+	add_child(e)
+	e.add_to_group("enemies")
 
-func _spawn_enemy_randomly() -> void:
-    # Update spawn interval dynamically
-    var ratio = min(elapsed_time / (6 * 60.0), 1.0)
-    _spawn_timer.wait_time = lerp(initial_spawn_interval,
-                                  final_spawn_interval,
-                                  ratio)
-    # Random position
-    var rx = randf_range(spawn_area.position.x,
-                         spawn_area.position.x + spawn_area.size.x)
-    var rz = randf_range(spawn_area.position.z,
-                         spawn_area.position.z + spawn_area.size.z)
-    var pos = Vector3(rx, spawn_area.position.y, rz)
-    _spawn_enemy(pos)
+	s["spawn_interval"] = interval
+	GameStateManager.save_state()
 
-func _on_win_timer_timeout() -> void:
-    get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not event.echo:
+		_save_full_state()
+		GameStateManager.save_state()
+		get_tree().paused = true
+		_settings_ui = SETTINGS_SCENE.instantiate()
+		_settings_ui.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+		_settings_ui.connect("settings_closed", Callable(self, "_on_settings_closed"))
+		get_tree().get_root().add_child(_settings_ui)
 
-func _on_log_timer_timeout() -> void:
-    var ratio = min(elapsed_time / (6 * 60.0), 1.0)
-    var current_spawn = lerp(initial_spawn_interval,
-                             final_spawn_interval,
-                             ratio)
-    var walk_speed   = player.base_speed
-    var run_speed    = player.sprint_speed
-    var current_speed = lerp(initial_speed_factor * walk_speed,
-                             final_speed_factor * run_speed,
-                             ratio)
-    print("⏱ Time:", elapsed_time, 
-          "– Spawn Interval:", current_spawn, 
-          "s, Enemy Speed:", current_speed)
+func _on_settings_closed() -> void:
+	get_tree().paused = false
+	_settings_ui.queue_free()
+	_settings_ui = null
+	GameStateManager.load_state()
+	_setup_timers()
+
+func _on_win() -> void:
+	GameStateManager.reset_state()
+	get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")
+
+func _save_full_state() -> void:
+	var s = GameStateManager.state
+	s["player_pos"] = GameStateManager._vec3_to_dict(player.global_transform.origin)
+	s["player_health"] = player.Health
+	s["enemies"].clear()
+	for e in get_tree().get_nodes_in_group("enemies"):
+		s["enemies"].append({
+			"pos":    GameStateManager._vec3_to_dict(e.global_transform.origin),
+			"health": e.health
+		})
+	GameStateManager.save_state()
+	print("Saved full state to disk.")

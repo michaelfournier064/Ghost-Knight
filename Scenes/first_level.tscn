@@ -46,8 +46,8 @@ shadow_enabled = true
 directional_shadow_max_distance = 800.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
-collision_layer = 16   ; Environment
-collision_mask  = 5    ; Player (1) + Enemy (4)
+collision_layer = 16
+collision_mask = 5
 physics_material_override = SubResource("15")
 
 [node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
