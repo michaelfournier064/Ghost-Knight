@@ -45,7 +45,7 @@ func _assign_enemy_targets() -> void:
 func _spawn_enemy(at_position: Vector3) -> void:
 	var e = ENEMY_SCENE.instantiate()
 	e.global_transform.origin = at_position
-	if e is RogueSkeletonEnemy:
+	if e is RogueSkeletonEnemy and is_instance_valid(player):
 		e.target_path = player.get_path()
 	add_child(e)
 
