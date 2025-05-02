@@ -45,8 +45,8 @@ var move_speed    : float = 0.0
 @onready var attack_box = $AttackBox
 
 func _ready() -> void:
-	# Load defaults
-	var pd = GameStateManager.state.player_defaults
+	# Load defaults from singleton
+	var pd = GameStateManagerSingleton.state.player_defaults
 	max_health       = pd.max_health
 	regen_interval   = pd.regen_interval
 	base_speed       = pd.base_speed
@@ -65,12 +65,9 @@ func _ready() -> void:
 	input_attack     = pd.input_attack
 
 	# Load persisted state
-	var sp = GameStateManager.state
-	global_transform.origin = GameStateManager._dict_to_vec3(sp.player_pos)
-	if sp.player_health != null:
-		Health = sp.player_health
-	else:
-		Health = max_health
+	var sp = GameStateManagerSingleton.state
+	global_transform.origin = GameStateManagerSingleton._dict_to_vec3(sp.player_pos)
+	Health = sp.player_health if sp.player_health != null else max_health
 
 	get_tree().connect("tree_exiting", Callable(self, "_on_quit"))
 
@@ -94,11 +91,8 @@ func _physics_process(delta: float) -> void:
 		Animate.play("Jump_Start")
 		velocity.y = jump_velocity
 
-	# Determine move speed
-	if is_on_floor() and Input.is_action_pressed(input_sprint) and can_sprint:
-		move_speed = sprint_speed
-	else:
-		move_speed = base_speed
+	# Movement speed
+	move_speed = sprint_speed if is_on_floor() and Input.is_action_pressed(input_sprint) and can_sprint else base_speed
 
 	var in_dir = Input.get_vector(input_left, input_right, input_forward, input_back)
 	var move_dir = (transform.basis * Vector3(in_dir.x, 0, in_dir.y)).normalized()
@@ -113,8 +107,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_dir.z * move_speed
 
 	if can_dash and Input.is_action_just_pressed(input_dash):
-		var fwd = transform.basis.z.normalized()
-		velocity += fwd * dash_strength
+		velocity += transform.basis.z.normalized() * dash_strength
 
 	move_and_slide()
 
@@ -160,6 +153,6 @@ func _on_attack_box_body_entered(body: Node) -> void:
 		body.Take_Damage(1)
 
 func _on_quit() -> void:
-	GameStateManager.state.player_pos    = GameStateManager._vec3_to_dict(global_transform.origin)
-	GameStateManager.state.player_health = Health
-	GameStateManager.save_state()
+	GameStateManagerSingleton.state.player_pos    = GameStateManagerSingleton._vec3_to_dict(global_transform.origin)
+	GameStateManagerSingleton.state.player_health = Health
+	GameStateManagerSingleton.save_state()
