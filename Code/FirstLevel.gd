@@ -1,4 +1,3 @@
-# File: res://Scenes/FirstLevel.gd
 extends Node3D
 
 const SETTINGS_SCENE = preload("res://Scenes/Settings.tscn")
@@ -13,25 +12,25 @@ var _spawn_timer: Timer
 var _win_timer:   Timer
 
 func _ready() -> void:
-	GameStateManager.load_state()
+	GameStateManagerSingleton.load_state()
 	print("** After reset+load in FirstLevel._ready():")
-	print("   state[\"enemies\"]:", GameStateManager.state["enemies"])
+	print("   state[\"enemies\"]:", GameStateManagerSingleton.state["enemies"])
 	print("   group count:", get_tree().get_nodes_in_group("enemies").size())
 	_apply_full_state()
 	_setup_timers()
 	set_process_unhandled_input(true)
 
 func _apply_full_state() -> void:
-	var s = GameStateManager.state
+	var s = GameStateManagerSingleton.state
 
 	# restore player position
-	player.global_transform.origin = GameStateManager._dict_to_vec3(s["player_pos"])
+	player.global_transform.origin = GameStateManagerSingleton._dict_to_vec3(s["player_pos"])
 
 	# restore player health
 	if s["player_health"] != null:
 		player.Health = s["player_health"]
 	else:
-		player.Health = GameStateManager.state.player_defaults.max_health
+		player.Health = GameStateManagerSingleton.state.player_defaults.max_health
 
 	# clear + respawn existing enemies
 	for e in get_tree().get_nodes_in_group("enemies"):
@@ -45,7 +44,7 @@ func _apply_full_state() -> void:
 		e.add_to_group("enemies")
 
 func _setup_timers() -> void:
-	var s = GameStateManager.state
+	var s = GameStateManagerSingleton.state
 
 	if _spawn_timer:
 		_spawn_timer.queue_free()
@@ -67,10 +66,10 @@ func _setup_timers() -> void:
 	_win_timer.start()
 
 func _process(delta: float) -> void:
-	GameStateManager.state["elapsed_time"] += delta
+	GameStateManagerSingleton.state["elapsed_time"] += delta
 
 func _on_spawn_timer() -> void:
-	var s = GameStateManager.state
+	var s = GameStateManagerSingleton.state
 	var ratio = min(s["elapsed_time"] / s["win_time"], 1.0)
 	var interval = lerp(s["spawn_interval"], s["min_spawn_interval"], ratio)
 	var speed_factor = lerp(s["enemy_speed_factor"], s["max_speed_factor"], ratio)
@@ -88,12 +87,12 @@ func _on_spawn_timer() -> void:
 	e.add_to_group("enemies")
 
 	s["spawn_interval"] = interval
-	GameStateManager.save_state()
+	GameStateManagerSingleton.save_state()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not event.echo:
 		_save_full_state()
-		GameStateManager.save_state()
+		GameStateManagerSingleton.save_state()
 		get_tree().paused = true
 		_settings_ui = SETTINGS_SCENE.instantiate()
 		_settings_ui.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -104,22 +103,24 @@ func _on_settings_closed() -> void:
 	get_tree().paused = false
 	_settings_ui.queue_free()
 	_settings_ui = null
-	GameStateManager.load_state()
+	GameStateManagerSingleton.load_state()
 	_setup_timers()
 
 func _on_win() -> void:
-	GameStateManager.reset_state()
+	# Call reset_state() on the autoload instance instead of as a static
+	var gsm = get_node("/root/GameStateManagerSingleton")
+	gsm.reset_state()
 	get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")
 
 func _save_full_state() -> void:
-	var s = GameStateManager.state
-	s["player_pos"] = GameStateManager._vec3_to_dict(player.global_transform.origin)
+	var s = GameStateManagerSingleton.state
+	s["player_pos"] = GameStateManagerSingleton._vec3_to_dict(player.global_transform.origin)
 	s["player_health"] = player.Health
 	s["enemies"].clear()
 	for e in get_tree().get_nodes_in_group("enemies"):
 		s["enemies"].append({
-			"pos":    GameStateManager._vec3_to_dict(e.global_transform.origin),
+			"pos":    GameStateManagerSingleton._vec3_to_dict(e.global_transform.origin),
 			"health": e.health
 		})
-	GameStateManager.save_state()
+	GameStateManagerSingleton.save_state()
 	print("Saved full state to disk.")
