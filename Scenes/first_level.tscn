@@ -1,3 +1,4 @@
+; first_level.tscn
 [gd_scene load_steps=11 format=3 uid="uid://cny85skp87wdj"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
