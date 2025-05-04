@@ -59,4 +59,5 @@ func _on_quit_pressed() -> void:
 
 func _on_settings_closed() -> void:
 	get_tree().paused = false
+	_settings_ui.queue_free()
 	_settings_ui = null
