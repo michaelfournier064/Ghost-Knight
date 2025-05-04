@@ -51,6 +51,13 @@ theme_override_font_sizes/font_size = 40
 text = "Ghost Knight"
 horizontal_alignment = 1
 
+[node name="new_game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "New Game"
+flat = true
+
 [node name="play" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -61,18 +68,21 @@ flat = true
 [node name="load_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Load Older Save"
 flat = true
 
 [node name="settings" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Settings"
 flat = true
 
 [node name="quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Quit Game"
 flat = true
 
@@ -83,12 +93,3 @@ pitch_scale = 3.0
 [node name="Horror-background-music-302076" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ap1vi")
 autoplay = true
-
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/play" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/load_button" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/load_button" to="." method="_on_load_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/settings" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/settings" to="." method="_on_settings_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/quit" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]

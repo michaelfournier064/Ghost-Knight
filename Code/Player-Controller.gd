@@ -47,6 +47,7 @@ var move_speed    : float = 0.0
 
 func _ready() -> void:
 	# Load defaults from singleton
+	attack_box.monitoring = false
 	var pd = GameStateManagerSingleton.state.player_defaults
 	max_health       = pd.max_health
 	regen_interval   = pd.regen_interval
@@ -139,13 +140,16 @@ func perform_attack() -> void:
 	attack_box.monitoring = false
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
-
+	
 func Take_Damage(dmg: int) -> void:
 	Health -= dmg
 	print("Player HP:", Health)
 	if Health <= 0:
 		GameStateManager.reset_state()
-		get_tree().change_scene_to_file("res://Scenes/LoseScreen.tscn")
+		call_deferred("change_scene", "res://Scenes/LoseScreen.tscn")
+
+func change_scene(path: String) -> void:
+	get_tree().change_scene_to_file(path)
 
 func _on_attack_box_body_entered(body: Node) -> void:
 	if body.has_method("Take_Damage"):

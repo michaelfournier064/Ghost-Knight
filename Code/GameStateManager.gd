@@ -3,6 +3,7 @@ extends Node
 class_name GameStateManagerSingleton
 
 const STATE_PATH := "user://gamestate.json"
+var target_level: String = "Graveyard"
 
 static var state := {
 	"spawn_interval":     5.0,
