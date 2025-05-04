@@ -35,13 +35,15 @@ func _apply_full_state() -> void:
 	# clear + respawn existing enemies
 	for e in get_tree().get_nodes_in_group("enemies"):
 		e.queue_free()
+
 	for data in s["enemies"]:
 		var e = ENEMY_SCENE.instantiate()
 		e.target_path = player.get_path()
+		# 1) add to scene tree first…
+		add_child(e)
+		# 2) …then position and restore health
 		e.global_transform.origin = Vector3(data.pos.x, data.pos.y, data.pos.z)
 		e.health = data.health
-		add_child(e)
-		e.add_to_group("enemies")
 
 func _setup_timers() -> void:
 	var s = GameStateManagerSingleton.state
@@ -79,13 +81,16 @@ func _on_spawn_timer() -> void:
 		spawn_area.position.y,
 		randf_range(spawn_area.position.z, spawn_area.position.z + spawn_area.size.z)
 	)
+
 	var e = ENEMY_SCENE.instantiate()
 	e.target_path = player.get_path()
-	e.global_transform.origin = pos
-	e.speed = speed_factor * player.base_speed
+	# add before moving it
 	add_child(e)
-	e.add_to_group("enemies")
+	e.global_transform.origin = pos
+	# override the default speed if you like
+	e.speed = speed_factor * player.base_speed
 
+	# update spawn interval in state
 	s["spawn_interval"] = interval
 	GameStateManagerSingleton.save_state()
 

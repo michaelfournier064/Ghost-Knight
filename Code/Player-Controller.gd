@@ -70,8 +70,6 @@ func _ready() -> void:
 	global_transform.origin = GameStateManagerSingleton._dict_to_vec3(sp.player_pos)
 	Health = sp.player_health if sp.player_health != null else max_health
 
-	get_tree().connect("tree_exiting", Callable(self, "_on_quit"))
-
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		capture_mouse()
@@ -153,7 +151,7 @@ func _on_attack_box_body_entered(body: Node) -> void:
 	if body.has_method("Take_Damage"):
 		body.Take_Damage(1)
 
-func _on_quit() -> void:
+func _exit_tree() -> void:
 	GameStateManagerSingleton.state.player_pos    = GameStateManagerSingleton._vec3_to_dict(global_transform.origin)
 	GameStateManagerSingleton.state.player_health = Health
 	GameStateManagerSingleton.save_state()
