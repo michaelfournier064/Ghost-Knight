@@ -41,7 +41,8 @@ var move_speed    : float = 0.0
 
 @onready var head       = $Head
 @onready var collider   = $Collider
-@onready var Animate    = $"Placeholder art/AnimationPlayer"
+@onready var model      = $Skeleton_Rogue
+@onready var animate    = model.get_node("AnimationPlayer")
 @onready var attack_box = $AttackBox
 
 func _ready() -> void:
@@ -81,14 +82,13 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed(input_attack) and can_attack:
-		Animate.play("1H_Melee_Attack_Stab")
-		preform_attack()
+		perform_attack()
 
 	if has_gravity and not is_on_floor():
 		velocity += get_gravity() * delta
 
 	if can_jump and Input.is_action_just_pressed(input_jump) and is_on_floor():
-		Animate.play("Jump_Start")
+		animate.play("Jump_Start")
 		velocity.y = jump_velocity
 
 	# Movement speed
@@ -98,11 +98,11 @@ func _physics_process(delta: float) -> void:
 	var move_dir = (transform.basis * Vector3(in_dir.x, 0, in_dir.y)).normalized()
 
 	if move_dir == Vector3.ZERO:
-		Animate.play("Idle_Combat")
+		animate.play("Idle_Combat")
 		velocity.x = move_toward(velocity.x, 0, move_speed * delta * 8)
 		velocity.z = move_toward(velocity.z, 0, move_speed * delta * 8)
 	else:
-		Animate.play("Walking_D_Skeletons")
+		animate.play("Walking_D_Skeletons")
 		velocity.x = move_dir.x * move_speed
 		velocity.z = move_dir.z * move_speed
 
@@ -133,10 +133,11 @@ func release_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
 
-func preform_attack() -> void:
+func perform_attack() -> void:
 	can_attack = false
+	animate.play("1H_Melee_Attack_Stab")
 	attack_box.monitoring = true
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.5).timeout
 	attack_box.monitoring = false
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true

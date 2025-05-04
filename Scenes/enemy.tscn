@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqqh3nsm8c7i4"]
 
 [ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/enemy.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/characters/gltf/Skeleton_Minion.glb" id="2"]
+[ext_resource type="PackedScene" uid="uid://buxyg03i0buj3" path="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/characters/gltf/Skeleton_Minion.glb" id="2"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.4
