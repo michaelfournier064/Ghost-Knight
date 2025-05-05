@@ -7,7 +7,7 @@ class_name Player
 var Health : int
 
 @export var regen_interval : float
-var regen_timer : float = 0.0
+var regen_timer : float = 1
 
 @export_group("WhatCanYouDO")
 @export var can_move   : bool = true
@@ -83,8 +83,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_look(event.relative)
 
 func _physics_process(delta: float) -> void:
+	
 	if Input.is_action_just_pressed(input_attack) and can_attack:
-		Animate.play("1H_Melee_Attack_Stab")
 		preform_attack()
 
 	if has_gravity and not is_on_floor():
@@ -148,16 +148,16 @@ func preform_attack() -> void:
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
 
+func _on_attack_box_body_entered(body: Node3D) -> void:
+	if body.has_method("Take_Damage"):
+		body.Take_Damage(1)
+
 func Take_Damage(dmg: int) -> void:
 	Health -= dmg
 	print("Player HP:", Health)
 	if Health <= 0:
 		GameStateManager.reset_state()
 		get_tree().change_scene_to_file("res://Scenes/LoseScreen.tscn")
-
-func _on_attack_box_body_entered(body: Node) -> void:
-	if body.has_method("Take_Damage"):
-		body.Take_Damage(1)
 
 func _on_quit() -> void:
 	GameStateManager.state.player_pos    = GameStateManager._vec3_to_dict(global_transform.origin)

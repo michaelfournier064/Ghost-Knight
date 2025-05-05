@@ -2,7 +2,7 @@
 extends CharacterBody3D
 class_name RogueSkeletonEnemy
 
-enum State { CHASE, ATTACK }
+enum State { CHASE, ATTACK,}
 
 @export var target_path: NodePath
 var target: Node3D
@@ -92,6 +92,7 @@ func _on_attack_box_body_entered(body: Node) -> void:
 		body.Take_Damage(1)
 
 func Take_Damage(dmg: int) -> void:
+	print("OUCH")
 	health -= dmg
 	if health <= 0:
 		queue_free()

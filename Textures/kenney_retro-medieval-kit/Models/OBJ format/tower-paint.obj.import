@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b08ximj2apihb"
+path="res://.godot/imported/tower-paint.obj-5d2e3d694cf28481a7e1e17e066908ec.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tower-paint.obj-5d2e3d694cf28481a7e1e17e066908ec.mesh"]
+
+source_file="res://Textures/kenney_retro-medieval-kit/Models/OBJ format/tower-paint.obj"
+dest_files=["res://.godot/imported/tower-paint.obj-5d2e3d694cf28481a7e1e17e066908ec.mesh", "res://.godot/imported/tower-paint.obj-5d2e3d694cf28481a7e1e17e066908ec.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

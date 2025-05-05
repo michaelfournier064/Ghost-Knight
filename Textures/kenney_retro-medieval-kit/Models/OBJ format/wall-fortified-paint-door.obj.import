@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dbb2tpcohlhnt"
+path="res://.godot/imported/wall-fortified-paint-door.obj-734a85b1aa0c4eee05162a9af2730246.mesh"
+
+[deps]
+
+files=["res://.godot/imported/wall-fortified-paint-door.obj-734a85b1aa0c4eee05162a9af2730246.mesh"]
+
+source_file="res://Textures/kenney_retro-medieval-kit/Models/OBJ format/wall-fortified-paint-door.obj"
+dest_files=["res://.godot/imported/wall-fortified-paint-door.obj-734a85b1aa0c4eee05162a9af2730246.mesh", "res://.godot/imported/wall-fortified-paint-door.obj-734a85b1aa0c4eee05162a9af2730246.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
