@@ -1,10 +1,12 @@
-; first_level.tscn
-[gd_scene load_steps=11 format=3 uid="uid://cny85skp87wdj"]
+[gd_scene load_steps=14 format=3 uid="uid://cny85skp87wdj"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
 [ext_resource type="Script" uid="uid://dko62vfogw7o3" path="res://Code/FirstLevel.gd" id="2"]
-[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Audio/691806__atruna__wind.ogg" id="9"]
-[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
+[ext_resource type="PackedScene" uid="uid://11fbamjcbsh8" path="res://Assets/ObjectModels/twisted_tree.glb" id="5_8tugf"]
+[ext_resource type="PackedScene" uid="uid://ddinprg0ek3c8" path="res://Assets/ObjectModels/dead_tree.glb" id="6_m3o2c"]
+[ext_resource type="PackedScene" uid="uid://bvdd4runevw7o" path="res://Assets/ObjectModels/gravestone.glb" id="7_m3o2c"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Assets/Sounds/ObjectTiedSounds/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Assets/Sounds/ObjectTiedSounds/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
 
 [sub_resource type="ProceduralSkyMaterial" id="12"]
 sky_top_color = Color(0.225802, 0.170496, 0.275596, 1)
@@ -72,3 +74,48 @@ autoplay = true
 stream = ExtResource("10")
 volume_db = -8.0
 autoplay = true
+
+[node name="Root Scene" parent="." instance=ExtResource("5_8tugf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.9119, 0, -182.747)
+
+[node name="Root Scene2" parent="." instance=ExtResource("5_8tugf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.6155, 0, 41.3158)
+
+[node name="Root Scene3" parent="." instance=ExtResource("5_8tugf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.375, 0, -75.5168)
+
+[node name="Root Scene4" parent="." instance=ExtResource("5_8tugf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.6339, 0, 18.6461)
+
+[node name="Root Scene5" parent="." instance=ExtResource("6_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.599, 0, 48.4641)
+
+[node name="Root Scene6" parent="." instance=ExtResource("6_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -166.453, 0, -210.712)
+
+[node name="Sketchfab_Scene9" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 43.862)
+
+[node name="Sketchfab_Scene8" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.5264, 0, 45.1437)
+
+[node name="Sketchfab_Scene7" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.6105, 0, 37.699)
+
+[node name="Sketchfab_Scene6" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.9732, 0, 31.5423)
+
+[node name="Sketchfab_Scene5" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2142, 0, -58.5143)
+
+[node name="Sketchfab_Scene4" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9344, 0, 43.7062)
+
+[node name="Sketchfab_Scene3" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59.7764)
+
+[node name="Sketchfab_Scene2" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.3678, 0, 46.4305)
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7183, 0, 37.6634)

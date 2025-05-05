@@ -1,4 +1,3 @@
-# first_level.gd
 extends Node3D
 
 const SETTINGS_SCENE = preload("res://Scenes/Settings.tscn")
@@ -7,10 +6,12 @@ const WIN_SCENE      = preload("res://Scenes/WinScreen.tscn")
 
 @export var spawn_area: AABB = AABB(Vector3(-20, 0.5, -20), Vector3(40, 0, 40))
 
-@onready var player: Player = $Player
+@onready var player: Player        = $Player
 var _settings_ui: Control
 var _spawn_timer: Timer
 var _win_timer:   Timer
+var _spawn_time_left: float = 0.0
+var _win_time_left:   float = 0.0
 
 func _ready() -> void:
 	GameStateManagerSingleton.load_state()
@@ -97,8 +98,20 @@ func _on_spawn_timer() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not event.echo:
+		# capture remaining time on each timer
+		if _spawn_timer != null:
+			_spawn_time_left = _spawn_timer.time_left
+		else:
+			_spawn_time_left = 0.0
+
+		if _win_timer != null:
+			_win_time_left = _win_timer.time_left
+		else:
+			_win_time_left = 0.0
+
 		_save_full_state()
 		GameStateManagerSingleton.save_state()
+
 		get_tree().paused = true
 		_settings_ui = SETTINGS_SCENE.instantiate()
 		_settings_ui.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -109,8 +122,16 @@ func _on_settings_closed() -> void:
 	get_tree().paused = false
 	_settings_ui.queue_free()
 	_settings_ui = null
-	GameStateManagerSingleton.load_state()
-	_setup_timers()
+
+	# resume spawn timer exactly where it left off
+	if _spawn_timer != null:
+		_spawn_timer.wait_time = _spawn_time_left
+		_spawn_timer.start()
+	# resume win timer likewise
+	if _win_timer != null:
+		_win_timer.one_shot = true
+		_win_timer.wait_time = _win_time_left
+		_win_timer.start()
 
 func _on_win() -> void:
 	# Call reset_state() on the autoload instance instead of as a static

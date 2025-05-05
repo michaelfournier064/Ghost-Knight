@@ -52,7 +52,7 @@ func _on_return_to_game_button_pressed() -> void:
 	SettingsLoaderSingleton.save_settings()
 	get_tree().paused = false
 	emit_signal("settings_closed")
-	queue_free()
+	# parent frees this node, so no queue_free() here
 
 func _on_save_changes_pressed() -> void:
 	click_sound.play()
