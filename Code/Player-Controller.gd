@@ -38,6 +38,7 @@ var regen_timer : float = 0.0
 var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed    : float = 0.0
+var is_attacking: bool = false
 
 @onready var head       = $Head
 @onready var collider   = $Collider
@@ -69,7 +70,10 @@ func _ready() -> void:
 	# Load persisted state
 	var sp = GameStateManagerSingleton.state
 	global_transform.origin = GameStateManagerSingleton._dict_to_vec3(sp.player_pos)
-	Health = sp.player_health if sp.player_health != null else max_health
+	if sp.player_health != null:
+		Health = sp.player_health
+	else:
+		Health = max_health
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -80,36 +84,46 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_look(event.relative)
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed(input_attack) and can_attack:
+	# 1) Fire off an attack if requested (but don't early return)
+	if Input.is_action_just_pressed(input_attack) and can_attack and not is_attacking:
 		perform_attack()
 
+	# 2) Gravity and jump
 	if has_gravity and not is_on_floor():
 		velocity += get_gravity() * delta
 
 	if can_jump and Input.is_action_just_pressed(input_jump) and is_on_floor():
 		animate.play("Jump_Start")
-		velocity.y = jump_velocity
 
-	# Movement speed
-	move_speed = sprint_speed if is_on_floor() and Input.is_action_pressed(input_sprint) and can_sprint else base_speed
+	# 3) Determine speed
+	if is_on_floor() and Input.is_action_pressed(input_sprint) and can_sprint:
+		move_speed = sprint_speed
+	else:
+		move_speed = base_speed
 
-	var in_dir = Input.get_vector(input_left, input_right, input_forward, input_back)
+	# 4) Movement input
+	var in_dir   = Input.get_vector(input_left, input_right, input_forward, input_back)
 	var move_dir = (transform.basis * Vector3(in_dir.x, 0, in_dir.y)).normalized()
 
-	if move_dir == Vector3.ZERO:
-		animate.play("Idle_Combat")
-		velocity.x = move_toward(velocity.x, 0, move_speed * delta * 8)
-		velocity.z = move_toward(velocity.z, 0, move_speed * delta * 8)
-	else:
-		animate.play("Walking_D_Skeletons")
-		velocity.x = move_dir.x * move_speed
-		velocity.z = move_dir.z * move_speed
+	# 5) Only override walk/idle animations if NOT currently in an attack
+	if not is_attacking:
+		if move_dir == Vector3.ZERO:
+			if animate.current_animation != "Idle_Combat":
+				animate.play("Idle_Combat")
+		else:
+			if animate.current_animation != "Walking_D_Skeletons":
+				animate.play("Walking_D_Skeletons")
 
+	# 6) Apply horizontal velocity regardless of attacking
+	velocity.x = move_dir.x * move_speed
+	velocity.z = move_dir.z * move_speed
+
+	# 7) Dash
 	if can_dash and Input.is_action_just_pressed(input_dash):
 		velocity += transform.basis.z.normalized() * dash_strength
 
+	# 8) Slide and regen
 	move_and_slide()
-
 	regen_timer += delta
 	if regen_timer >= regen_interval:
 		regen_timer -= regen_interval
@@ -133,11 +147,18 @@ func release_mouse() -> void:
 	mouse_captured = false
 
 func perform_attack() -> void:
-	can_attack = false
-	animate.play("1H_Melee_Attack_Stab")
+	is_attacking   = true
+	can_attack     = false
+	animate.play("2H_Melee_Attack_Slice")
 	attack_box.monitoring = true
-	await get_tree().create_timer(0.5).timeout
-	attack_box.monitoring = false
+
+	# wait for the AnimationPlayer2 to fire its animation_finished signal
+	var finished_name: StringName = await animate.animation_finished
+	if finished_name == "2H_Melee_Attack_Slice":
+		attack_box.monitoring = false
+		is_attacking = false
+
+	# now start your cooldown
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
 	

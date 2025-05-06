@@ -19,7 +19,7 @@ static var state := {
 		"sprint_speed":    10.0,
 		"jump_velocity":   4.5,
 		"dash_strength":   15.0,
-		"attack_cooldown": 1.0,
+		"attack_cooldown": 0,
 		"input_left":      "Left",
 		"input_right":     "Right",
 		"input_forward":   "Forward",

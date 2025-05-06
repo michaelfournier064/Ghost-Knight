@@ -83,7 +83,7 @@ func _perform_attack() -> void:
 	can_attack = false
 	animate.play("1H_Melee_Attack_Stab")
 	attack_box.monitoring = true
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0).timeout
 	attack_box.monitoring = false
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
