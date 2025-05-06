@@ -38,6 +38,7 @@ size = Vector3(50, 0.5, 50)
 
 [node name="First Level" type="CharacterBody3D"]
 script = ExtResource("2")
+spawn_area = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("14")
