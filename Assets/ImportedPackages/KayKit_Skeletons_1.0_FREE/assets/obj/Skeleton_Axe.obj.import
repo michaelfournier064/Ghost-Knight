@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cxbpo4nmu6cie"
+path="res://.godot/imported/Skeleton_Axe.obj-d54c1c315fa9123d7ad4309a0d329d6e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Skeleton_Axe.obj-d54c1c315fa9123d7ad4309a0d329d6e.mesh"]
+
+source_file="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/assets/obj/Skeleton_Axe.obj"
+dest_files=["res://.godot/imported/Skeleton_Axe.obj-d54c1c315fa9123d7ad4309a0d329d6e.mesh", "res://.godot/imported/Skeleton_Axe.obj-d54c1c315fa9123d7ad4309a0d329d6e.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

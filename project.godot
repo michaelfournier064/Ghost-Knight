@@ -19,6 +19,8 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 AudioManager="*res://Scenes/AudioManager.tscn"
 SettingsLoader="*res://Code/SettingsLoader.gd"
 GameStateManager="*res://Code/GameStateManager.gd"
+LevelConfig="*res://Code/LevelConfig.gd"
+SaveManager="*res://Code/SaveManager.gd"
 
 [display]
 
@@ -85,3 +87,4 @@ Attack={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true

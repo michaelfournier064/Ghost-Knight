@@ -1,4 +1,3 @@
-# File: res://Code/RogueSkeletonEnemy.gd
 extends CharacterBody3D
 class_name RogueSkeletonEnemy
 
@@ -32,9 +31,11 @@ func _ready() -> void:
 
 	_hide_hood_and_cape()
 
-	# Attack‐hitbox hookup
+	# Attack‐hitbox hookup (only connect once)
 	attack_box.monitoring = false
-	attack_box.connect("body_entered", Callable(self, "_on_attack_box_body_entered"))
+	var hit_callable = Callable(self, "_on_attack_box_body_entered")
+	if not attack_box.is_connected("body_entered", hit_callable):
+		attack_box.connect("body_entered", hit_callable)
 
 func _physics_process(delta: float) -> void:
 	# if gravity applies
@@ -82,7 +83,7 @@ func _perform_attack() -> void:
 	can_attack = false
 	animate.play("1H_Melee_Attack_Stab")
 	attack_box.monitoring = true
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0).timeout
 	attack_box.monitoring = false
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true

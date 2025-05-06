@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://otc7g3kkbjsg"]
 
 [ext_resource type="Script" uid="uid://dch56i83eyd4d" path="res://Code/titleScreen.gd" id="1_n15yj"]
-[ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
-[ext_resource type="AudioStream" uid="uid://dw3jm70ayjkhb" path="res://Assets/horror-background-music-302076.mp3" id="4_ap1vi"]
-[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/click_sound.mp3" id="4_clicksound"]
+[ext_resource type="Texture2D" uid="uid://8868ej6g8bqb" path="res://Assets/Images/BackgroundImages/haunted-house-1603186638OAd.jpg" id="2_jmir7"]
+[ext_resource type="AudioStream" uid="uid://dw3jm70ayjkhb" path="res://Assets/Sounds/BackgroundMusic/horror-background-music-302076.mp3" id="4_ap1vi"]
+[ext_resource type="AudioStream" uid="uid://djcndhdv4wq52" path="res://Assets/Sounds/UserInterfaceSounds/click_sound.mp3" id="4_clicksound"]
 
 [node name="titleScreen" type="Control"]
 layout_mode = 3
@@ -51,6 +51,13 @@ theme_override_font_sizes/font_size = 40
 text = "Ghost Knight"
 horizontal_alignment = 1
 
+[node name="new_game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "New Game"
+flat = true
+
 [node name="play" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -61,18 +68,21 @@ flat = true
 [node name="load_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Load Older Save"
 flat = true
 
 [node name="settings" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Settings"
 flat = true
 
 [node name="quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
 text = "Quit Game"
 flat = true
 
@@ -83,12 +93,3 @@ pitch_scale = 3.0
 [node name="Horror-background-music-302076" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ap1vi")
 autoplay = true
-
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/play" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/load_button" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/load_button" to="." method="_on_load_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/settings" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/settings" to="." method="_on_settings_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/quit" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]

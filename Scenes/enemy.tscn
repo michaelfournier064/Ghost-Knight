@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqqh3nsm8c7i4"]
 
 [ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/enemy.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://cn1kaqjkgtxha" path="res://OnlineAssets/KayKit_Skeletons_1.0_FREE/characters/gltf/Skeleton_Rogue.glb" id="2"]
+[ext_resource type="PackedScene" uid="uid://buxyg03i0buj3" path="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/characters/gltf/Skeleton_Minion.glb" id="2"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.384218
@@ -22,7 +22,7 @@ transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 
 autoplay = "Idle_Combat"
 
 [node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38342e-05, 0.96936, -1.63428e-05)
+transform = Transform3D(2.205, 0, 0, 0, 2.205, 0, 0, 0, 2.205, 0, 1.445, 0)
 shape = SubResource("1")
 
 [node name="AttackBox" type="Area3D" parent="."]
@@ -30,7 +30,7 @@ transform = Transform3D(1.33, 0, 0, 0, 1.33, 0, 0, 0, 1.33, 0, 0.975, 0)
 collision_layer = 8
 
 [node name="AttackCollision" type="CollisionShape3D" parent="AttackBox"]
-transform = Transform3D(1.185, 0, 0, 0, 1.805, 0, 0, 0, 1, 0, 1.16, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.69, 0, 0.544, -0.445)
 shape = SubResource("2")
 
 [node name="AttackTimer" type="Timer" parent="."]

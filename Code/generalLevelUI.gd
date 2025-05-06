@@ -8,16 +8,16 @@ const SkeletonEnemy  = preload("res://Code/enemy.gd")
 var _settings_ui: Control = null
 
 func _ready() -> void:
-	# Enable unhandled input so ESC can open settings
-	set_process_unhandled_input(true)
+	# Disable auto-quit on window close
+	get_tree().set_auto_accept_quit(false)
+	# Catch Esc as raw input
+	set_process_input(true)
 	_assign_enemy_targets()
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if get_tree().paused:
 		return
-	if event is InputEventKey \
-	and event.keycode == KEY_ESCAPE \
-	and event.pressed and not event.echo:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not event.echo:
 		if _settings_ui:
 			return
 		get_tree().paused = true
