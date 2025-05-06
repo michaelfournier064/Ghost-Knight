@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x8om5p7glkpy"
+uid="uid://bccmcu8r4jjo4"
 path.s3tc="res://.godot/imported/details.png-cb5c4b3058c738719f842445c76a98b5.s3tc.ctex"
+path.etc2="res://.godot/imported/details.png-cb5c4b3058c738719f842445c76a98b5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/kenney_retro-medieval-kit/Models/FBX format/Textures/details.png"
-dest_files=["res://.godot/imported/details.png-cb5c4b3058c738719f842445c76a98b5.s3tc.ctex"]
+dest_files=["res://.godot/imported/details.png-cb5c4b3058c738719f842445c76a98b5.s3tc.ctex", "res://.godot/imported/details.png-cb5c4b3058c738719f842445c76a98b5.etc2.ctex"]
 
 [params]
 

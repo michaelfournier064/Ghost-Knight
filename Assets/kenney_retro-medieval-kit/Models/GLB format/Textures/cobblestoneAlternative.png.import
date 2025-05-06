@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyr4f68n74bf0"
+uid="uid://bai5pmcs6lolm"
 path.s3tc="res://.godot/imported/cobblestoneAlternative.png-e01056423986ecaba01e35652d98c1ef.s3tc.ctex"
+path.etc2="res://.godot/imported/cobblestoneAlternative.png-e01056423986ecaba01e35652d98c1ef.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/kenney_retro-medieval-kit/Models/GLB format/Textures/cobblestoneAlternative.png"
-dest_files=["res://.godot/imported/cobblestoneAlternative.png-e01056423986ecaba01e35652d98c1ef.s3tc.ctex"]
+dest_files=["res://.godot/imported/cobblestoneAlternative.png-e01056423986ecaba01e35652d98c1ef.s3tc.ctex", "res://.godot/imported/cobblestoneAlternative.png-e01056423986ecaba01e35652d98c1ef.etc2.ctex"]
 
 [params]
 

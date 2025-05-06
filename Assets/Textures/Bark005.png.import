@@ -3,16 +3,17 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://j5o5qyu52qqu"
-path="res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.ctex"
+path.s3tc="res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.s3tc.ctex"
+path.etc2="res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Textures/Bark005.png"
-dest_files=["res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.ctex"]
+dest_files=["res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.s3tc.ctex", "res://.godot/imported/Bark005.png-57daa1a4f7ebce10c952e9e7f50c8b4f.etc2.ctex"]
 
 [params]
 

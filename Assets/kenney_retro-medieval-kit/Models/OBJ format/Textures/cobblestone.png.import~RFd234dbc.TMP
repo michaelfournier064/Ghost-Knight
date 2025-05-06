@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cisllucpckfb1"
-path.s3tc="res://.godot/imported/details.png-1cb6b97a626c059028bbe9837f8d171d.s3tc.ctex"
-path.etc2="res://.godot/imported/details.png-1cb6b97a626c059028bbe9837f8d171d.etc2.ctex"
+uid="uid://b0jqjqte6g56b"
+path.s3tc="res://.godot/imported/cobblestone.png-56df391533c5f3a1178cf0f18e406f45.s3tc.ctex"
+path.etc2="res://.godot/imported/cobblestone.png-56df391533c5f3a1178cf0f18e406f45.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Textures/kenney_retro-medieval-kit/Models/FBX format/Textures/details.png"
-dest_files=["res://.godot/imported/details.png-1cb6b97a626c059028bbe9837f8d171d.s3tc.ctex", "res://.godot/imported/details.png-1cb6b97a626c059028bbe9837f8d171d.etc2.ctex"]
+source_file="res://Assets/kenney_retro-medieval-kit/Models/OBJ format/Textures/cobblestone.png"
+dest_files=["res://.godot/imported/cobblestone.png-56df391533c5f3a1178cf0f18e406f45.s3tc.ctex", "res://.godot/imported/cobblestone.png-56df391533c5f3a1178cf0f18e406f45.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqp0lj1h4ypxw"
 path.s3tc="res://.godot/imported/tree.png-35455dd830d5cdd8d0e919fb043d2c73.s3tc.ctex"
+path.etc2="res://.godot/imported/tree.png-35455dd830d5cdd8d0e919fb043d2c73.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/kenney_retro-medieval-kit/Models/OBJ format/Textures/tree.png"
-dest_files=["res://.godot/imported/tree.png-35455dd830d5cdd8d0e919fb043d2c73.s3tc.ctex"]
+dest_files=["res://.godot/imported/tree.png-35455dd830d5cdd8d0e919fb043d2c73.s3tc.ctex", "res://.godot/imported/tree.png-35455dd830d5cdd8d0e919fb043d2c73.etc2.ctex"]
 
 [params]
 

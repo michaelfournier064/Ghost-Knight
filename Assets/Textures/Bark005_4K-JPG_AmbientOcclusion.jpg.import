@@ -3,16 +3,17 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cr2h0tdwvod1u"
-path="res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.ctex"
+path.s3tc="res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.s3tc.ctex"
+path.etc2="res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Textures/Bark005_4K-JPG_AmbientOcclusion.jpg"
-dest_files=["res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.ctex"]
+dest_files=["res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.s3tc.ctex", "res://.godot/imported/Bark005_4K-JPG_AmbientOcclusion.jpg-eed9b8e4e2345167f87f83dffda34874.etc2.ctex"]
 
 [params]
 
