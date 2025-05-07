@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
 [ext_resource type="Script" uid="uid://dko62vfogw7o3" path="res://Code/FirstLevel.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://cln5fmfmlcv8g" path="res://Models/HauntedHouse.glb" id="7_12jxe"]
+[ext_resource type="PackedScene" uid="uid://cln5fmfmlcv8g" path="res://Assets/ObjectModels/HauntedHouse.glb" id="7_12jxe"]
 [ext_resource type="PackedScene" uid="uid://c6c8qru36d2lh" path="res://Scenes/Tree_Scene.tscn" id="7_m3o2c"]
-[ext_resource type="PackedScene" uid="uid://s4j34mbfbtvq" path="res://Models/fence.glb" id="8_ogcqi"]
-[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Audio/691806__atruna__wind.ogg" id="9"]
-[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Audio/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
+[ext_resource type="PackedScene" uid="uid://s4j34mbfbtvq" path="res://Assets/ObjectModels/fence.glb" id="8_ogcqi"]
+[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Assets/Sounds/ObjectTiedSounds/691806__atruna__wind.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Assets/Sounds/ObjectTiedSounds/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m3o2c"]
 sky_top_color = Color(0.12443, 0.1127, 0.23, 1)
@@ -67,7 +67,7 @@ transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, -0.0450821, -0.121662, 
 mesh = SubResource("16")
 
 [node name="FloorColl" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0.5, 0)
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
 shape = SubResource("17")
 
 [node name="Player" parent="." instance=ExtResource("1")]

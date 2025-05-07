@@ -33,7 +33,7 @@ static var state := {
 	"enemy_defaults": {
 		"speed":           4.0,
 		"attack_cooldown": 1.0,
-		"attack_range":    1.5,
+		"attack_range":    2.5,
 		"max_health":      2
 	},
 

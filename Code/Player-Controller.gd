@@ -47,6 +47,8 @@ var is_attacking: bool = false
 @onready var attack_box = $AttackBox
 
 func _ready() -> void:
+	# Make this player findable via group
+	add_to_group("Player")
 	# Load defaults from singleton
 	attack_box.monitoring = false
 	var pd = GameStateManagerSingleton.state.player_defaults

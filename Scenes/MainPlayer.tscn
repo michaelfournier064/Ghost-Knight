@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://d2ra440afas5r" path="res://Scenes/skeleton_rogue.tscn" id="2_0sgo8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iof21"]
-radius = 0.556534
-height = 1.8
+radius = 0.4
+height = 1.7
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0sgo8"]
-size = Vector3(1, 2.28831, 2.33612)
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 collision_mask = 52
 script = ExtResource("1_vu2og")
 base_speed = 10.0
@@ -19,12 +19,8 @@ sprint_speed = 20.0
 [node name="Skeleton_Rogue" parent="." instance=ExtResource("2_0sgo8")]
 transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, 0, 0)
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="Skeleton_Rogue"]
-root_node = NodePath("")
-autoplay = "Idle_Combat"
-
 [node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.12, 0, 0, 0, 2.12, 0, 0, 0, 2.12, 0, 1.645, 0)
+transform = Transform3D(2.12, 0, 0, 0, 2.12, 0, 0, 0, 2.12, 0, 1.625, 0)
 shape = SubResource("CapsuleShape3D_iof21")
 
 [node name="Head" type="Node3D" parent="."]
@@ -45,7 +41,7 @@ collision_mask = 4
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackBox"]
-transform = Transform3D(2.205, 0, 0, 0, 1, 0, 0, 0, 0.73, 0.016, 1.351, -1.507)
+transform = Transform3D(2.185, 0, 0, 0, 2.185, 0, 0, 0, 2.185, 0.016, 1.351, -1.507)
 shape = SubResource("BoxShape3D_0sgo8")
 debug_color = Color(0.998109, 0, 0.150301, 0.42)
 
