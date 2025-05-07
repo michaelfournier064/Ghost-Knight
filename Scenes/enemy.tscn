@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqqh3nsm8c7i4"]
 
-[ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/enemy.gd" id="1"]
+[ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/EnemyBase.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ncs30rlsq3wx" path="res://Scenes/skeleton_minion.tscn" id="2_1f0kj"]
 
 [sub_resource type="CapsuleShape3D" id="1"]

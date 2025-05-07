@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://7h275vuh6tig"]
 
-[ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/enemy.gd" id="1"]
+[ext_resource type="Script" uid="uid://bm36hv25qwae2" path="res://Code/enemyBase.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://bo1vldf5cqglq" path="res://Assets/ImportedPackages/KayKit_Skeletons_1.0_FREE/characters/gltf/Skeleton_Mage.glb" id="2_vc7rp"]
 
 [sub_resource type="CapsuleShape3D" id="1"]

@@ -2,7 +2,7 @@
 extends Node3D
 
 const SETTINGS_SCENE = preload("res://Scenes/Settings.tscn")
-const SkeletonEnemy  = preload("res://Code/enemy.gd")
+const SkeletonEnemy  = preload("res://Code/EnemyBase.gd")
 
 @onready var player: Player = $Player
 var _settings_ui: Control = null

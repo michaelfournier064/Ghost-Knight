@@ -1,9 +1,10 @@
 # File: res://Code/FirstLevel.gd
 extends Node3D
 
-const SETTINGS_SCENE = preload("res://Scenes/Settings.tscn")
-const ENEMY_SCENE    = preload("res://Scenes/Enemy.tscn")
-const WIN_SCENE      = preload("res://Scenes/WinScreen.tscn")
+const SETTINGS_SCENE       = preload("res://Scenes/Settings.tscn")
+const SKELETON_MINION_SCENE = preload("res://Scenes/enemy.tscn")
+const SKELETON_MAGE_SCENE   = preload("res://Scenes/SkeletonMageEnemy.tscn")
+const WIN_SCENE             = preload("res://Scenes/WinScreen.tscn")
 
 @export var spawn_area: AABB = AABB(Vector3(-20, 0.5, -20), Vector3(40, 0, 40))
 
@@ -15,40 +16,36 @@ var _spawn_time_left: float = 0.0
 var _win_time_left: float = 0.0
 
 func _ready() -> void:
-	# Disable auto-quit on window close so Esc never immediately quits
 	get_tree().set_auto_accept_quit(false)
-
-	# Load and apply previous state
 	GameStateManagerSingleton.load_state()
-	print("** After reset+load in FirstLevel._ready():")
-	print("   state[\"enemies\"]:", GameStateManagerSingleton.state["enemies"])
-	print("   group count:", get_tree().get_nodes_in_group("enemies").size())
 	_apply_full_state()
 	_setup_timers()
-
-	# Ensure this node sees raw input before anyone handles it
 	set_process_input(true)
 
 func _apply_full_state() -> void:
 	var s = GameStateManagerSingleton.state
-
-	# restore player position
+	# restore player
 	player.global_transform.origin = GameStateManagerSingleton._dict_to_vec3(s["player_pos"])
-
-	# restore player health
 	if s["player_health"] != null:
 		player.Health = s["player_health"]
 	else:
-		player.Health = GameStateManagerSingleton.state.player_defaults.max_health
+		player.Health = s.player_defaults.max_health
 
-	# clear + respawn enemies
+	# clear old enemies
 	for e in get_tree().get_nodes_in_group("enemies"):
 		e.queue_free()
+
+	# respawn from state
 	for data in s["enemies"]:
-		var e = ENEMY_SCENE.instantiate()
+		var scene = null
+		if data.type == "mage":
+			scene = SKELETON_MAGE_SCENE
+		else:
+			scene = SKELETON_MINION_SCENE
+		var e = scene.instantiate()
 		e.target_path = player.get_path()
 		add_child(e)
-		e.global_transform.origin = Vector3(data.pos.x, data.pos.y, data.pos.z)
+		e.global_transform.origin = GameStateManagerSingleton._dict_to_vec3(data.pos)
 		e.health = data.health
 
 func _setup_timers() -> void:
@@ -80,15 +77,9 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not event.echo:
-		# capture remaining time
-		if _spawn_timer != null:
-			_spawn_time_left = _spawn_timer.time_left
-		else:
-			_spawn_time_left = 0.0
-		if _win_timer != null:
-			_win_time_left = _win_timer.time_left
-		else:
-			_win_time_left = 0.0
+		# pause timers
+		_spawn_time_left = _spawn_timer.time_left if _spawn_timer else 0.0
+		_win_time_left   = _win_timer.time_left   if _win_timer   else 0.0
 
 		_save_full_state()
 		GameStateManagerSingleton.save_state()
@@ -104,12 +95,11 @@ func _on_settings_closed() -> void:
 	_settings_ui.queue_free()
 	_settings_ui = null
 
-	# resume spawn timer
-	if _spawn_timer != null:
+	# resume timers
+	if _spawn_timer:
 		_spawn_timer.wait_time = _spawn_time_left
 		_spawn_timer.start()
-	# resume win timer
-	if _win_timer != null:
+	if _win_timer:
 		_win_timer.one_shot = true
 		_win_timer.wait_time = _win_time_left
 		_win_timer.start()
@@ -120,33 +110,47 @@ func _on_spawn_timer() -> void:
 	var interval = lerp(s["spawn_interval"], s["min_spawn_interval"], ratio)
 	var speed_factor = lerp(s["enemy_speed_factor"], s["max_speed_factor"], ratio)
 
+	# always spawn a minion
+	_spawn_enemy(SKELETON_MINION_SCENE, speed_factor)
+	# spawn a mage at ~1/3 rate
+	if randi() % 3 == 0:
+		_spawn_enemy(SKELETON_MAGE_SCENE, speed_factor)
+
+	s["spawn_interval"] = interval
+	GameStateManagerSingleton.save_state()
+
+func _spawn_enemy(scene: PackedScene, speed_factor: float) -> void:
 	var pos = Vector3(
 		randf_range(spawn_area.position.x, spawn_area.position.x + spawn_area.size.x),
 		spawn_area.position.y,
 		randf_range(spawn_area.position.z, spawn_area.position.z + spawn_area.size.z)
 	)
-
-	var e = ENEMY_SCENE.instantiate()
+	var e = scene.instantiate()
 	e.target_path = player.get_path()
-	add_child(e)
 	e.global_transform.origin = pos
 	e.speed = speed_factor * player.base_speed
-
-	s["spawn_interval"] = interval
-	GameStateManagerSingleton.save_state()
+	add_child(e)
 
 func _on_win() -> void:
-	var gsm = get_node("/root/GameStateManagerSingleton")
-	gsm.reset_state()
+	var game_state_manager = GameStateManagerSingleton.new()
+	game_state_manager.reset_state()
 	get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")
 
 func _save_full_state() -> void:
 	var s = GameStateManagerSingleton.state
-	s["player_pos"] = GameStateManagerSingleton._vec3_to_dict(player.global_transform.origin)
+	# player
+	s["player_pos"]    = GameStateManagerSingleton._vec3_to_dict(player.global_transform.origin)
 	s["player_health"] = player.Health
+	# enemies
 	s["enemies"].clear()
 	for e in get_tree().get_nodes_in_group("enemies"):
+		var type = ""
+		if e is SkeletonMageEnemy:
+			type = "mage"
+		else:
+			type = "minion"
 		s["enemies"].append({
+			"type": type,
 			"pos": GameStateManagerSingleton._vec3_to_dict(e.global_transform.origin),
 			"health": e.health
 		})
