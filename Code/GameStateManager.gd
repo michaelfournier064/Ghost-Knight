@@ -32,15 +32,9 @@ static var state := {
 
 	"enemy_defaults": {
 		"speed":           4.0,
-		"attack_range":    2.5,
 		"attack_cooldown": 1.0,
+		"attack_range":    2.5,
 		"max_health":      2
-	},
-	"ranged_defaults": {
-		"detection_radius":      8.0,
-		"attack_cooldown":       2.0,
-		"max_health":            3,
-		"projectile_scene_path": "res://Scenes/Projectile.tscn"
 	},
 
 	"elapsed_time":   0.0,
