@@ -136,8 +136,7 @@ func _on_spawn_timer() -> void:
 	GameStateManagerSingleton.save_state()
 
 func _on_win() -> void:
-	var gsm = get_node("/root/GameStateManagerSingleton")
-	gsm.reset_state()
+	GameStateManagerSingleton.new().reset_state()
 	get_tree().change_scene_to_file("res://Scenes/WinScreen.tscn")
 
 func _save_full_state() -> void:
