@@ -89,13 +89,15 @@ func _physics_process(delta: float) -> void:
 	# 1) Fire off an attack if requested (but don't early return)
 	if Input.is_action_just_pressed(input_attack) and can_attack and not is_attacking:
 		perform_attack()
-
+	
 	# 2) Gravity and jump
 	if has_gravity and not is_on_floor():
 		velocity += get_gravity() * delta
 
 	if can_jump and Input.is_action_just_pressed(input_jump) and is_on_floor():
 		animate.play("Jump_Start")
+		velocity.y = jump_velocity
+
 
 	# 3) Determine speed
 	if is_on_floor() and Input.is_action_pressed(input_sprint) and can_sprint:
