@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://dst6waa8pbla7"]
+
+[ext_resource type="PackedScene" uid="uid://s4j34mbfbtvq" path="res://Assets/ObjectModels/fence.glb" id="1_mwlxk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7msv"]
+size = Vector3(1, 1, 1.20416)
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_mwlxk")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles" index="0"]
+collision_layer = 16
+collision_mask = 5
+
+[node name="FenceBody3D1" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 8.702, 0, 0, 0, 5.065, -0.888, 8.889, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D2" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="1"]
+transform = Transform3D(0.5, 0, 0, 0, 8.68, 0, 0, 0, 5.065, -0.888, -0.461, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D3" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="2"]
+transform = Transform3D(0.5, 0, 0, 0, 8.65, 0, 0, 0, 5.065, -0.888, -9.809, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D4" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="3"]
+transform = Transform3D(0.5, 0, 0, 0, 8.73, 0, 0, 0, 5.065, -0.888, -19.161, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D5" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="4"]
+transform = Transform3D(0.5, 0, 0, 0, 8.74, 0, 0, 0, 5.065, -0.888, -28.585, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D6" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="5"]
+transform = Transform3D(0.5, 0, 0, 0, 8.915, 0, 0, 0, 5.065, -0.888, -38.082, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FenceBody3D7" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="6"]
+transform = Transform3D(0.5, 0, 0, 0, 8.76, 0, 0, 0, 5.065, -0.888, -47.629, 3.058)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D1" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="7"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -52.3461, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D2" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="8"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -42.8941, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D3" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="9"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -33.2719, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D4" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="10"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -23.871, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D5" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="11"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -14.4531, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D6" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="12"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, -5.15443, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D7" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="13"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, 4.1783, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")
+
+[node name="FencePost3D8" type="CollisionShape3D" parent="Sketchfab_model/Gothic Fence_obj_cleaner_materialmerger_gles/StaticBody3D" index="14"]
+transform = Transform3D(0.915, 0, 0, 0, 0.846, 0, 0, 0, 6.3, -0.836908, 13.5621, 3.77597)
+shape = SubResource("BoxShape3D_g7msv")

@@ -1,12 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cny85skp87wdj"]
+[gd_scene load_steps=12 format=3 uid="uid://cny85skp87wdj"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Scenes/MainPlayer.tscn" id="1"]
 [ext_resource type="Script" uid="uid://dko62vfogw7o3" path="res://Code/FirstLevel.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://dst6waa8pbla7" path="res://FenceWithStaticGate.tscn" id="6_8tugf"]
 [ext_resource type="PackedScene" uid="uid://cln5fmfmlcv8g" path="res://Assets/ObjectModels/HauntedHouse.glb" id="7_12jxe"]
 [ext_resource type="PackedScene" uid="uid://c6c8qru36d2lh" path="res://Scenes/Tree_Scene.tscn" id="7_m3o2c"]
-[ext_resource type="PackedScene" uid="uid://s4j34mbfbtvq" path="res://Assets/ObjectModels/fence.glb" id="8_ogcqi"]
-[ext_resource type="AudioStream" uid="uid://58cfrq4wqwae" path="res://Assets/Sounds/ObjectTiedSounds/691806__atruna__wind.ogg" id="9"]
-[ext_resource type="AudioStream" uid="uid://bh2we4hfj22b8" path="res://Assets/Sounds/ObjectTiedSounds/22328__sleepcircle__whisper-trail-1.ogg" id="10"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m3o2c"]
 sky_top_color = Color(0.12443, 0.1127, 0.23, 1)
@@ -35,16 +33,11 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxShape3D" id="17"]
 size = Vector3(50, 0.5, 50)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m3o2c"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ffwbm"]
-size = Vector3(10.9395, 23.701, 502.307)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_m3o2c"]
-size = Vector3(331.597, 27.2777, 9.92834)
-
 [node name="First Level" type="Node3D"]
 script = ExtResource("2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1rnkg")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.116671, 0.447798, -0.88649, 0, 0.892586, 0.450878, 0.993171, 0.0526042, -0.104139, 0, 0, 0)
@@ -53,17 +46,13 @@ light_energy = 7.5
 shadow_enabled = true
 directional_shadow_max_distance = 963.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1rnkg")
-
 [node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.462127, 0)
 collision_layer = 16
 collision_mask = 5
 physics_material_override = SubResource("15")
 
 [node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, -0.0450821, -0.121662, 0.280524)
+transform = Transform3D(1024, 0, 0, 0, 1, 0, 0, 0, 1024, 0, 0, 0)
 mesh = SubResource("16")
 
 [node name="FloorColl" type="CollisionShape3D" parent="Floor"]
@@ -72,25 +61,10 @@ shape = SubResource("17")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 
-[node name="Audio" type="Node3D" parent="."]
-
-[node name="AmbientWind" type="AudioStreamPlayer3D" parent="Audio"]
-stream = ExtResource("9")
-volume_db = -4.0
-autoplay = true
-
-[node name="Whispers" type="AudioStreamPlayer3D" parent="Audio"]
-stream = ExtResource("10")
-volume_db = -8.0
-autoplay = true
-
 [node name="In-Game Assets" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.159193, 0.489348, -33.0118)
 
-[node name="StaticBody3D" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="Tree" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
+[node name="Tree1" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.4354, -0.366047, -6.9073)
 
 [node name="Tree2" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
@@ -99,56 +73,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.4354, -0.366047, 101.494)
 [node name="Tree3" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0012, -0.366047, 101.494)
 
-[node name="Sketchfab_Scene" parent="In-Game Assets" instance=ExtResource("7_12jxe")]
+[node name="Tree4" parent="In-Game Assets" instance=ExtResource("7_m3o2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="HauntedHouse" parent="In-Game Assets" instance=ExtResource("7_12jxe")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -146.902, -0.308114, 56.1134)
 
-[node name="Sketchfab_Scene3" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate1" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -86.2806, -0.243011, 180.764)
 
-[node name="Sketchfab_Scene4" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate2" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -86.6226, -0.486995, -153.493)
 
-[node name="Sketchfab_Scene5" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate3" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -86.0391, -0.397424, 14.6627)
 
-[node name="Sketchfab_Scene6" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate4" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 252.407, -0.243011, 178.439)
 
-[node name="Sketchfab_Scene7" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate5" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 252.065, -0.486995, -155.818)
 
-[node name="Sketchfab_Scene8" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate6" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 252.648, -0.397424, 12.3378)
 
-[node name="Sketchfab_Scene10" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate7" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, -53.4344, -0.486995, 310.945)
 
-[node name="Sketchfab_Scene11" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate8" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, 115.287, -0.397424, 311.577)
 
-[node name="Sketchfab_Scene12" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate9" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, -53.4344, -0.486995, -192.141)
 
-[node name="Sketchfab_Scene13" parent="In-Game Assets" instance=ExtResource("8_ogcqi")]
+[node name="FenceWithStaticGate10" parent="In-Game Assets" instance=ExtResource("6_8tugf")]
 transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, 115.287, -0.397424, -191.509)
-
-[node name="Wall" type="StaticBody3D" parent="."]
-collision_layer = 32
-collision_mask = 5
-physics_material_override = SubResource("PhysicsMaterial_m3o2c")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.8596, 11.3505, 30.8469)
-shape = SubResource("BoxShape3D_ffwbm")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 249.209, 11.3505, 30.6473)
-shape = SubResource("BoxShape3D_ffwbm")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.8528, 15.9791, -222.527)
-shape = SubResource("BoxShape3D_m3o2c")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.9324, 15.8965, 280.249)
-shape = SubResource("BoxShape3D_m3o2c")
