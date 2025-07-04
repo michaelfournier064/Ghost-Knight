@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cs11j3yo21gee"]
+
+[ext_resource type="PackedScene" uid="uid://11fbamjcbsh8" path="res://Assets/ObjectModels/twisted_tree.glb" id="1_wl7th"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wl7th"]
+height = 13.3252
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcr6g"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jeqcr"]
+
+[node name="Root Scene" instance=ExtResource("1_wl7th")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_layer = 16
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1.57733, 0.211259, 0.116584, -0.22682, 1.55479, 0.299157, -0.0678534, -0.286387, 1.71012, 0, 10.4727, -1.73596)
+shape = SubResource("CylinderShape3D_wl7th")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, -0.0250168, -0.73533)
+shape = SubResource("BoxShape3D_mcr6g")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 0.622515, 0.782608, 0, -0.782608, 0.622515, 0, 3.8862, -1.19351)
+shape = SubResource("CylinderShape3D_jeqcr")
